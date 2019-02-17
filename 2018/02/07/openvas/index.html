@@ -67,7 +67,7 @@
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
         <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
-            <img src="/img/close.png" alt="Close"/>
+            <img src="/img/close.png" alt="Close">
         </div>
         <!-- Lists in Slidebars -->
         <ul class="sb-menu">
@@ -146,7 +146,7 @@
                     <!-- Nav logo -->
                     <div class="logo">
                         <a href="/" title="Logo" class="animsition-link">
-                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                         <img src="/img/logo.png" alt="Logo" width="35px;"> 
                         </a>
                     </div>
                     <!-- // Nav logo -->
@@ -185,7 +185,7 @@
 
         <!-- ============================ Header & Logo bar =========================== -->
 
-
+</div>
       
 <section id="intro">
     <div class="container">
@@ -198,9 +198,9 @@
     
     
     | 
-    <a href='/tags/openvass/'>openvass</a>,
+    <a href="/tags/openvass/">openvass</a>,
     
-    <a href='/tags/漏洞扫描/'>漏洞扫描</a>
+    <a href="/tags/漏洞扫描/">漏洞扫描</a>
     
     
 </span>
@@ -288,12 +288,12 @@
 </li>
 </ul>
 <p>使用openvas-check-setup -v9 出现it seem like your openvas-9 installation is ok 表示安装成功</p>
-<h2 id="登录openvas浏览器"><a href="#登录openvas浏览器" class="headerlink" title="登录openvas浏览器"></a>登录openvas浏览器</h2><p>在浏览器输入<a href="https://127.0.0.1:9392(https不可省略)" target="_blank" rel="noopener">https://127.0.0.1:9392(https不可省略)</a><br>添加信任 advaced-&gt;add exception-&gt;confirm security exception<br><img src="https://upload-images.jianshu.io/upload_images/8707100-9457f781b145c9f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>登录admin 和所设密码进入openvas</p>
+<h2 id="登录openvas浏览器"><a href="#登录openvas浏览器" class="headerlink" title="登录openvas浏览器"></a>登录openvas浏览器</h2><p>在浏览器输入<a href="https://127.0.0.1:9392(https不可省略)" target="_blank" rel="noopener">https://127.0.0.1:9392(https不可省略)</a><br>添加信任 advaced-&gt;add exception-&gt;confirm security exception<br><img src="https://upload-images.jianshu.io/upload_images/8707100-9457f781b145c9f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>登录admin 和所设密码进入openvas</p>
 <h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><p>需要对扫描配置做一些更改，为之后端口扫描准备</p>
 <blockquote>
 <p>/var/lib/openvas/plugins/nmap.nasl 对nmap.nasl修改<br>407:if(ver)改成if（svc）,411:log_message最后ver前面添加svc<br>388:后面添加花括号，并且在418对花括号闭合<br>413：svc改为string </p>
 </blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/8707100-2b8fafce128d070a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/8707100-2b8fafce128d070a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>最后重启openvass</p>
 
             <div class="clearfix"></div>
