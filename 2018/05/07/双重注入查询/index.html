@@ -95,7 +95,7 @@
 				    
 				    <li><a href="/categories/linux/" class="animsition-link">linux<small>(1)</small></a></li>
 				    
-				    <li><a href="/categories/python/" class="animsition-link">python<small>(1)</small></a></li>
+				    <li><a href="/categories/python/" class="animsition-link">python<small>(2)</small></a></li>
 				    
 				    <li><a href="/categories/sql/" class="animsition-link">sql<small>(1)</small></a></li>
 				    
@@ -208,12 +208,12 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h1 id="双重注入查询"><a href="#双重注入查询" class="headerlink" title="双重注入查询"></a>双重注入查询</h1><h2 id="相关函数介绍"><a href="#相关函数介绍" class="headerlink" title="相关函数介绍"></a>相关函数介绍</h2><p>对于双重查询，需要先了解count，rand（），floor函数功能以及group by语法用法</p>
-<h3 id="1-concat函数用法"><a href="#1-concat函数用法" class="headerlink" title="1.concat函数用法"></a>1.concat函数用法</h3><p>concat（string1，string2，string3）将string1，string2，string3字符串连接起来输出（orcle只允许2个字符串）<br><img src="https://upload-images.jianshu.io/upload_images/8707100-e05dc36c5ad3fe4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><img src="https://upload-images.jianshu.io/upload_images/8707100-39eac8763592b90e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="concat函数用法"></p>
-<h3 id="2-count函数"><a href="#2-count函数" class="headerlink" title="2.count函数"></a>2.count函数</h3><p>我们可以用 select <em> from information_schema.schemata ,来查询当前数据库信息<br><img src="https://upload-images.jianshu.io/upload_images/8707100-58f7b2b76411efc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>再根据count函数，我们可以得知当前数据库总数，count函数就是列出当前指定值的数目，count（</em>） freom information_schema.schamata中列出数据库的记录数<br><img src="https://upload-images.jianshu.io/upload_images/8707100-795ce558337b2afc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<h3 id="3-rand（）函数"><a href="#3-rand（）函数" class="headerlink" title="3.rand（）函数"></a>3.rand（）函数</h3><p>由下图可以看到，selecr rand（）返回的结果是小于1的随机小数.<br><img src="https://upload-images.jianshu.io/upload_images/8707100-a49c37770c0e76e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<h3 id="4-floor（）函数用法"><a href="#4-floor（）函数用法" class="headerlink" title="4.floor（）函数用法"></a>4.floor（）函数用法</h3><p>floor向下取整<br><img src="https://upload-images.jianshu.io/upload_images/8707100-0ef7bb32013c744a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<h3 id="5-group-by-用法"><a href="#5-group-by-用法" class="headerlink" title="5.group by 用法"></a>5.group by 用法</h3><p>GROUP BY 语句用于结合合计函数，根据一个或多个列对结果集进行分组</p>
+      		<h2 id="双重注入查询"><a href="#双重注入查询" class="headerlink" title="双重注入查询:"></a>双重注入查询:</h2><p>相关函数介绍：<br>对于双重查询，需要先了解count，rand（），floor函数功能以及group by语法用法<br>1.concat函数用法<br>concat（string1，string2，string3）将string1，string2，string3字符串连接起来输出（orcle只允许2个字符串）<br><img src="https://upload-images.jianshu.io/upload_images/8707100-e05dc36c5ad3fe4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><img src="https://upload-images.jianshu.io/upload_images/8707100-39eac8763592b90e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="concat函数用法"></p>
+<p>2.count函数<br>我们可以用 select <em> from information_schema.schemata ,来查询当前数据库信息<br><img src="https://upload-images.jianshu.io/upload_images/8707100-58f7b2b76411efc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>再根据count函数，我们可以得知当前数据库总数，count函数就是列出当前指定值的数目，count（</em>） freom information_schema.schamata中列出数据库的记录数<br><img src="https://upload-images.jianshu.io/upload_images/8707100-795ce558337b2afc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>3.rand（）函数<br>由下图可以看到，selecr rand（）返回的结果是小于1的随机小数.<br><img src="https://upload-images.jianshu.io/upload_images/8707100-a49c37770c0e76e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>4.floor（）函数用法<br>floor向下取整<br><img src="https://upload-images.jianshu.io/upload_images/8707100-0ef7bb32013c744a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>5.group by 用法</p>
+<p>GROUP BY 语句用于结合合计函数，根据一个或多个列对结果集进行分组</p>
 <h2 id="双重查询原理"><a href="#双重查询原理" class="headerlink" title="双重查询原理"></a>双重查询原理</h2><p>研究人员发现，使用group by结合rand（）以及count（*）这样聚集函数，在sql查询时会出现错误，这种错误随机产生，这样就产生的双重查询注入，使用floor函数只是为了将查询结果分类。<br>下面我们来结果几个函数用法,看几个简单的组合<br><img src="https://upload-images.jianshu.io/upload_images/8707100-3a81075f19261032.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>SELECT floor(rand()<em>2);我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0<br>采用如果 SELECT CONCAT((SELECT database()), FLOOR(RAND()</em>2));<br><img src="https://upload-images.jianshu.io/upload_images/8707100-9e4845de2e7c7fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
 <p>select database()返回用户名，再与floor取整函数取得数字相连，floor（rand（））不是0就是1，所以结果又随机两种，<br>SELECT CONCAT((SELECT database()), FLOOR(RAND()*2))a from user;<br><img src="https://upload-images.jianshu.io/upload_images/8707100-ea94accd841c40a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>

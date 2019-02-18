@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Tag: 网页 | m&#39;bolg</title>
+  <title>编写python-nmap多线程扫描器 | m&#39;bolg</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -186,69 +186,108 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我多想再见你，哪怕匆匆一眼就别离！</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p><br /><br /><br /><br />2019.1.14 --manhao</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2018/02/07/html学习笔记（一）/">html学习笔记（一）</a></h4>
-                            
-                            <p><time datetime="2018-02-07T13:02:45.000Z"><a href="/2018/02/07/html学习笔记（一）/">2018-02-07</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2019-01-10T04:02:45.000Z" itemprop="datePublished">
+          2019-01-10
+      </time>
+    
+    
+    | 
+    <a href='/tags/python/'>python</a>,
+    
+    <a href='/tags/nmap/'>nmap</a>
+    
+    
+</span>
+                <h1>编写python-nmap多线程扫描器</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>python-nmap相关描述</p>
+<p><pre><br><code><br>python描述：<br>python-nmap是一个使用nmap进行端口扫描的python库。它可以很轻易的生成nmap扫描报告，并且可以帮助系统管理员进行自动化扫描任务和生成报告。同时，它也支持nmap脚本输出python。<br></code><br></pre><br>&#8195;</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用pip安装</p>
+<blockquote>
+<p>pip install python-nmap<br><img src="https://upload-images.jianshu.io/upload_images/8707100-500d15957c968f3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>常用的使用方法</p>
+</blockquote>
+<p>import nmap # 导入 nmap.py 模块<br>nm = nmap.PortScanner() # 实例化nmap.PortScanner对象<br>nm.scan(‘127.0.0.1’, ‘22-443’) # 扫描127.0.0.1,端口号从22至443<br>nm.command_line() # 获取当前执行扫描的命令行: nmap -oX - -p 22-443 127.0.0.1<br>nm.scaninfo() # 获取nmap扫描信息 {‘tcp’: {‘services’: ‘22-443’, ‘method’: ‘connect’}}<br>nm.all_hosts() # 获取所有已经扫描的主机<br>nm[‘127.0.0.1’].hostname() # 获取一个主机127.0.0.1的主机名，通常为用户记录<br>nm[‘127.0.0.1’].hostnames() # 获取主机127.0.0.1的主机名列表，返回一个字典类型  # [{‘name’:’hostname1’, ‘type’:’PTR’}, {‘name’:’hostname2’, ‘type’:’user’}]<br>nm[‘127.0.0.1’].state() # 获取主机127.0.0.1的状态 (up|down|unknown|skipped)<br>nm[‘127.0.0.1’].all_protocols() # 获取执行的协议 [‘tcp’, ‘udp’] 包含 (ip|tcp|udp|sctp)<br>nm[‘127.0.0.1’][‘tcp’].keys() # 获取tcp协议所有的端口号<br>nm[‘127.0.0.1’].all_tcp() # 获取tcp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].all_udp() # 获取udp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].all_sctp() # 获取sctp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].has_tcp(22) # 主机127.0.0.1是否有关于22端口的任何信息<br>nm[‘127.0.0.1’][‘tcp’][22] # 获取主机127.0.0.1关于22端口的信息<br>nm[‘127.0.0.1’].tcp(22) # 获取主机127.0.0.1关于22端口的信息<br>nm[‘127.0.0.1’][‘tcp’][22][‘state’] # 获取主机22端口的状态 (open) </p>
+<p>python通过调用本地nmap扫描功能进行扫描，以json格式输出</p>
+<hr>
+<p>{‘nmap’: {‘command_line’: ‘nmap -oX - -n -Pn -sT -sV -p 22 106.15.94.206’, ‘scaninfo’: {‘tcp’: {‘method’: ‘connect’, ‘services’: ‘22’}}, ‘scanstats’: {‘timestr’: ‘Wed Feb 13 13:20:33 2019’, ‘elapsed’: ‘0.62’, ‘uphosts’: ‘1’, ‘downhosts’: ‘0’, ‘totalhosts’: ‘1’}}, ‘scan’: {‘106.15.94.206’: {‘hostnames’: [{‘name’: ‘’, ‘type’: ‘’}], ‘addresses’: {‘ipv4’: ‘106.15.94.206’}, ‘vendor’: {}, ‘status’: {‘state’: ‘up’, ‘reason’: ‘user-set’}, ‘tcp’: {22: {‘state’: ‘open’, ‘reason’: ‘syn-ack’, ‘name’: ‘ssh’, ‘product’: ‘OpenSSH’, ‘version’: ‘7.4’, ‘extrainfo’: ‘protocol 2.0’, ‘conf’: ‘10’, ‘cpe’: ‘cpe:/a:openbsd:openssh:7.4’}}}}}</p>
+<hr>
+<h3 id="portsscan-打造多线程端口扫描器"><a href="#portsscan-打造多线程端口扫描器" class="headerlink" title="portsscan 打造多线程端口扫描器"></a>portsscan 打造多线程端口扫描器</h3><p>本项目已同步到github：<a href="https://github.com/teazmh/portscan" target="_blank" rel="noopener">https://github.com/teazmh/portscan</a></p>
+<p>欢迎大家</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>or '1'='1' --##</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="/2018/05/30/任意用户密码重置的10种姿势/">
+        用户密码重置找回 10 种常见姿势 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
