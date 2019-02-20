@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[hexo-next主题美化(持续更新)]]></title>
+    <url>%2F2019%2F02%2F10%2Fhexo-next%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96%2F</url>
+    <content type="text"><![CDATA[主页文章添加阴影效果效果图：打开\themes\next\source\css_custom\custom.styl向里面加入：1234567.post &#123; margin-top: 60px; margin-bottom: 60px; padding: 25px; -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5); -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5); &#125; 文章结尾效果在路径 \themes\next\layout_macro 中新建 passage-end-tag.swig 文件,并添加以下内容：12345&lt;div&gt; &#123;% if not is_index %&#125; &lt;div style=&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;------------- 本文结束 &lt;i class=&quot;fa fa-heart&quot;&gt;&lt;/i&gt; 感谢您的阅读 -------------&lt;/div&gt; &#123;% endif %&#125;&lt;/div&gt; 接着打开\themes\next\layout_macro\post.swig文件，在post-body 之后， post-footer 之前添加如下画红色部分代码（post-footer之前两个DIV）12345&lt;div&gt; &#123;% if not is_index %&#125; &#123;% include &apos;passage-end-tag.swig&apos; %&#125; &#123;% endif %&#125;&lt;/div&gt; 完成后效果： 文章加密访问打开themes-&gt;next-&gt;layout-&gt;_partials-&gt;head.swig文件，在以下位置插入这样一段代码：1234567891011121314&lt;script&gt; (function () &#123; if (&apos;&#123;&#123; page.password &#125;&#125;&apos;) &#123; if (prompt(&apos;请输入文章密码&apos;) !== &apos;&#123;&#123; page.password &#125;&#125;&apos;) &#123; alert(&apos;密码错误！&apos;); if (history.length === 1) &#123; location.replace(&quot;https://evenyao.com&quot;); // 这里替换成你的首页 &#125; else &#123; history.back(); &#125; &#125; &#125; &#125;)();&lt;/script&gt; 然后在要加密的文章上添加password属性，后面则是跟想要设置的密码，类似这样： 文章版权说明在目录 next/layout/_macro/下添加 my-copyright.swig：123456789101112131415161718192021222324252627282930&#123;% if page.copyright %&#125;&lt;div class=&quot;my_post_copyright&quot;&gt; &lt;script src=&quot;//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js&quot;&gt;&lt;/script&gt; &lt;!-- JS库 sweetalert 可修改路径 --&gt; &lt;script src=&quot;https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js&quot;&gt;&lt;/script&gt; &lt;script src=&quot;https://unpkg.com/sweetalert/dist/sweetalert.min.js&quot;&gt;&lt;/script&gt; &lt;p&gt;&lt;span&gt;本文标题:&lt;/span&gt;&lt;a href=&quot;&#123;&#123; url_for(page.path) &#125;&#125;&quot;&gt;&#123;&#123; page.title &#125;&#125;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;&lt;span&gt;文章作者:&lt;/span&gt;&lt;a href=&quot;/&quot; title=&quot;访问 &#123;&#123; theme.author &#125;&#125; 的个人博客&quot;&gt;&#123;&#123; theme.author &#125;&#125;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;&lt;span&gt;发布时间:&lt;/span&gt;&#123;&#123; page.date.format(&quot;YYYY年MM月DD日 - HH:mm&quot;) &#125;&#125;&lt;/p&gt; &lt;p&gt;&lt;span&gt;最后更新:&lt;/span&gt;&#123;&#123; page.updated.format(&quot;YYYY年MM月DD日 - HH:mm&quot;) &#125;&#125;&lt;/p&gt; &lt;p&gt;&lt;span&gt;原始链接:&lt;/span&gt;&lt;a href=&quot;&#123;&#123; url_for(page.path) &#125;&#125;&quot; title=&quot;&#123;&#123; page.title &#125;&#125;&quot;&gt;&#123;&#123; page.permalink &#125;&#125;&lt;/a&gt; &lt;span class=&quot;copy-path&quot; title=&quot;点击复制文章链接&quot;&gt;&lt;i class=&quot;fa fa-clipboard&quot; data-clipboard-text=&quot;&#123;&#123; page.permalink &#125;&#125;&quot; aria-label=&quot;复制成功！&quot;&gt;&lt;/i&gt;&lt;/span&gt; &lt;/p&gt; &lt;p&gt;&lt;span&gt;许可协议:&lt;/span&gt;&lt;i class=&quot;fa fa-creative-commons&quot;&gt;&lt;/i&gt; &lt;a rel=&quot;license&quot; href=&quot;https://creativecommons.org/licenses/by-nc-nd/4.0/&quot; target=&quot;_blank&quot; title=&quot;Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)&quot;&gt;署名-非商业性使用-禁止演绎 4.0 国际&lt;/a&gt; 转载请保留原文链接及作者。&lt;/p&gt; &lt;/div&gt;&lt;script&gt; var clipboard = new Clipboard(&apos;.fa-clipboard&apos;); $(&quot;.fa-clipboard&quot;).click(function()&#123; clipboard.on(&apos;success&apos;, function()&#123; swal(&#123; title: &quot;&quot;, text: &apos;复制成功&apos;, icon: &quot;success&quot;, showConfirmButton: true &#125;); &#125;); &#125;); &lt;/script&gt;&#123;% endif %&#125; 在目录next/source/css/_common/components/post/下添加my-post-copyright.styl123456789101112131415161718192021222324252627282930313233343536373839404142434445.my_post_copyright &#123; width: 85%; max-width: 45em; margin: 2.8em auto 0; padding: 0.5em 1.0em; border: 1px solid #d3d3d3; font-size: 0.93rem; line-height: 1.6em; word-break: break-all; background: rgba(255,255,255,0.4);&#125;.my_post_copyright p&#123;margin:0;&#125;.my_post_copyright span &#123; display: inline-block; width: 5.2em; color: #b5b5b5; font-weight: bold;&#125;.my_post_copyright .raw &#123; margin-left: 1em; width: 5em;&#125;.my_post_copyright a &#123; color: #808080; border-bottom:0;&#125;.my_post_copyright a:hover &#123; color: #a3d2a3; text-decoration: underline;&#125;.my_post_copyright:hover .fa-clipboard &#123; color: #000;&#125;.my_post_copyright .post-url:hover &#123; font-weight: normal;&#125;.my_post_copyright .copy-path &#123; margin-left: 1em; width: 1em; +mobile()&#123;display:none;&#125;&#125;.my_post_copyright .copy-path:hover &#123; color: #808080; cursor: pointer;&#125; 修改next/layout/_macro/post.swig，在代码12345&lt;div&gt; &#123;% if not is_index %&#125; &#123;% include &apos;wechat-subscriber.swig&apos; %&#125; &#123;% endif %&#125;&lt;/div&gt; 之前添加增加如下代码：12345&lt;div&gt; &#123;% if not is_index %&#125; &#123;% include &apos;my-copyright.swig&apos; %&#125; &#123;% endif %&#125;&lt;/div&gt; 如下修改next/source/css/_common/components/post/post.styl文件，在最后一行增加代码：1@import &quot;my-post-copyright&quot; 保存重新生成即可。如果要在该博文下面增加版权信息的显示，需要在 Markdown 中增加copyright: true的设置如果你觉得每次都要输入copyright: true很麻烦的话,那么在/scaffolds/post.md文件中添加]]></content>
+      <tags>
+        <tag>美化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexoeditor强大的hexo博客工具]]></title>
+    <url>%2F2019%2F02%2F07%2Fhexoeditor%E5%BC%BA%E5%A4%A7%E7%9A%84hexo%E5%8D%9A%E5%AE%A2%E5%B7%A5%E5%85%B7%2F</url>
+    <content type="text"><![CDATA[HexoEditor是由zhuzhuyule继承Moeditor进而开发的hexoeditor，支持hexo部署，七牛，腾讯云一键上传图片，对于国内用户非常方便。项目地址:Github HexoEditor使用Hexo _config.yml支持 hexo源中的快速新帖子 快速修改文件名（在Hexo Post Edit中） 快速部署帖子 快速HEXO命令hexo d，hexo g，hexo s，hexo clean支持图片国内网站直接快速上传： 自动将图像更改为Markdown 支持拖动图像 支持粘贴剪贴板图像 支持图像云（一步上传） 支持SM.MS 支持齐牛 腾讯 GitHub额外扩展： TeX数学表达式 UML图 编辑中的代码突出显示 读/写/预览模式 自定义字体/行高/字体大小 自定义主题 代码突出显示主题（由highlight.js提供支持）效果展示!]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>tools</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[编写python-nmap多线程扫描器]]></title>
+    <url>%2F2019%2F01%2F10%2Fpython-nmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%AB%E6%8F%8F%E5%99%A8%2F</url>
+    <content type="text"><![CDATA[python-nmap相关描述1234python-nmap是一个使用nmap进行端口扫描的python库。它可以很轻易的生成nmap扫描报告，并且可以帮助系统管理员进行自动化扫描任务和生成报告。同时，它也支持nmap脚本输出python。 安装使用pip安装 pip install python-nmap常用的使用方法import nmap # 导入 nmap.py 模块nm = nmap.PortScanner() # 实例化nmap.PortScanner对象nm.scan(‘127.0.0.1’, ‘22-443’) # 扫描127.0.0.1,端口号从22至443nm.command_line() # 获取当前执行扫描的命令行: nmap -oX - -p 22-443 127.0.0.1nm.scaninfo() # 获取nmap扫描信息 {‘tcp’: {‘services’: ‘22-443’, ‘method’: ‘connect’}}nm.all_hosts() # 获取所有已经扫描的主机nm[‘127.0.0.1’].hostname() # 获取一个主机127.0.0.1的主机名，通常为用户记录nm[‘127.0.0.1’].hostnames() # 获取主机127.0.0.1的主机名列表，返回一个字典类型 # [{‘name’:’hostname1’, ‘type’:’PTR’}, {‘name’:’hostname2’, ‘type’:’user’}]nm[‘127.0.0.1’].state() # 获取主机127.0.0.1的状态 (up|down|unknown|skipped)nm[‘127.0.0.1’].all_protocols() # 获取执行的协议 [‘tcp’, ‘udp’] 包含 (ip|tcp|udp|sctp)nm[‘127.0.0.1’][‘tcp’].keys() # 获取tcp协议所有的端口号nm[‘127.0.0.1’].all_tcp() # 获取tcp协议所有的端口号 (按照端口号大小进行排序)nm[‘127.0.0.1’].all_udp() # 获取udp协议所有的端口号 (按照端口号大小进行排序)nm[‘127.0.0.1’].all_sctp() # 获取sctp协议所有的端口号 (按照端口号大小进行排序)nm[‘127.0.0.1’].has_tcp(22) # 主机127.0.0.1是否有关于22端口的任何信息nm[‘127.0.0.1’][‘tcp’][22] # 获取主机127.0.0.1关于22端口的信息nm[‘127.0.0.1’].tcp(22) # 获取主机127.0.0.1关于22端口的信息nm[‘127.0.0.1’][‘tcp’][22][‘state’] # 获取主机22端口的状态 (open) python通过调用本地nmap扫描功能进行扫描，以json格式输出 {‘nmap’: {‘command_line’: ‘nmap -oX - -n -Pn -sT -sV -p 22 106.15.94.206’, ‘scaninfo’: {‘tcp’: {‘method’: ‘connect’, ‘services’: ‘22’}}, ‘scanstats’: {‘timestr’: ‘Wed Feb 13 13:20:33 2019’, ‘elapsed’: ‘0.62’, ‘uphosts’: ‘1’, ‘downhosts’: ‘0’, ‘totalhosts’: ‘1’}}, ‘scan’: {‘106.15.94.206’: {‘hostnames’: [{‘name’: ‘’, ‘type’: ‘’}], ‘addresses’: {‘ipv4’: ‘106.15.94.206’}, ‘vendor’: {}, ‘status’: {‘state’: ‘up’, ‘reason’: ‘user-set’}, ‘tcp’: {22: {‘state’: ‘open’, ‘reason’: ‘syn-ack’, ‘name’: ‘ssh’, ‘product’: ‘OpenSSH’, ‘version’: ‘7.4’, ‘extrainfo’: ‘protocol 2.0’, ‘conf’: ‘10’, ‘cpe’: ‘cpe:/a:openbsd:openssh:7.4’}}}}} portsscan 打造多线程端口扫描器本项目已同步到github：https://github.com/teazmh/portscan 欢迎大家]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>nmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[渗透测试过程（持续更新）]]></title>
+    <url>%2F2019%2F01%2F10%2F%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[渗透测试]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[用户密码重置找回 10 种常见姿势]]></title>
+    <url>%2F2018%2F05%2F30%2F%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E7%9A%8410%E7%A7%8D%E5%A7%BF%E5%8A%BF%2F</url>
+    <content type="text"><![CDATA[用户密码重置找回 10 种常见姿势说明： 用户名密码找回通常存在逻辑漏洞，读者因根据实际情况找出相应的漏洞 本片文章是参考补天白帽众学任意用户密码重置的10种姿势视频总结的笔记。视频链接:http://loudong.360.cn/School/content/id/214 1.验证码不失效2.本地验证绕过3.验证码直接返回4.验证码未绑定用户5.修改接受验证码的手机或邮箱6.跳过验证步骤7.未校验用户字段的值8.修改密码处 id 可替换9.cookie 值的替换10.修改信息时替换字段值]]></content>
+      <categories>
+        <category>逻辑漏洞</category>
+      </categories>
+      <tags>
+        <tag>逻辑漏洞</tag>
+        <tag>修改密码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[sqli-lab学习笔记less6-7（双重查询）]]></title>
+    <url>%2F2018%2F05%2F07%2F%E5%8F%8C%E9%87%8D%E6%B3%A8%E5%85%A5%E6%9F%A5%E8%AF%A2%2F</url>
+    <content type="text"><![CDATA[双重注入查询:相关函数介绍：对于双重查询，需要先了解count，rand（），floor函数功能以及group by语法用法1.concat函数用法concat（string1，string2，string3）将string1，string2，string3字符串连接起来输出（orcle只允许2个字符串）2.count函数我们可以用 select from information_schema.schemata ,来查询当前数据库信息再根据count函数，我们可以得知当前数据库总数，count函数就是列出当前指定值的数目，count（） freom information_schema.schamata中列出数据库的记录数 3.rand（）函数由下图可以看到，selecr rand（）返回的结果是小于1的随机小数. 4.floor（）函数用法floor向下取整 5.group by 用法 GROUP BY 语句用于结合合计函数，根据一个或多个列对结果集进行分组 双重查询原理研究人员发现，使用group by结合rand（）以及count（*）这样聚集函数，在sql查询时会出现错误，这种错误随机产生，这样就产生的双重查询注入，使用floor函数只是为了将查询结果分类。下面我们来结果几个函数用法,看几个简单的组合 SELECT floor(rand()2);我们从里向外看。rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0采用如果 SELECT CONCAT((SELECT database()), FLOOR(RAND()2)); select database()返回用户名，再与floor取整函数取得数字相连，floor（rand（））不是0就是1，所以结果又随机两种，SELECT CONCAT((SELECT database()), FLOOR(RAND()*2))a from user; 如果后面跟一个表名，那么就会返回一个集合，集合大小由表本生条数决定。我的数据库有3个管理员，所以就会返回3条记录。我们选择information_schema.tables表来查询，因为表数据多，产生较多的随机数,然后group by 分组显示出来select concat ((select database())), floor(rand()*2))as a from information_schema.tables group by a;其中concat（）as a 是将查询到的结果取一个别名，然后根据别名分组。 这样mysql0分到一组，mysql1分到一组。就只有两种结果了最后再结合count（*），聚集函数，则会有可能报错，但是注意到报错信息所附带我们需要的信息，而不是正常的报错信息。所以就产生了双重查询12SELECT count(*),CONCAT((SELECT user()), FLOOR(RAND()*2))as a from information_schema.tables group by a;(查询当前用户)SELECT count(*),CONCAT((SELECT version()), FLOOR(RAND()*2))as a from information_schema.tables group by a;（查询数据库版本 深层原理：http://wooyun.jozxing.cc/static/drops/tips-14312.html 大神分享的对于less-6 payload1$ http://127.0.0.1/sqli/Less-6/?id=1&quot; union select count(*),1,concat(0x3a,(select database()),0x3a,floor(rand(0)*2))a from information_schema.tables group by a--+ less-5 payload1$ http://127.0.0.1/sqli/Less-5/?id=1&apos; and 1=( select count(*) from information_schema.tables group by concat(0x3a,(select database()),0x3a,floor(rand(0)*2))) --+]]></content>
+      <categories>
+        <category>sql</category>
+      </categories>
+      <tags>
+        <tag>sqli-lab</tag>
+        <tag>双重查询</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[openvas]]></title>
+    <url>%2F2018%2F02%2F07%2Fopenvas%2F</url>
+    <content type="text"><![CDATA[openvas软件介绍OpenVAS是一款开放式的漏洞评估工具，主要用来检测目标网络或主机的安全性，OpenVAS能够基于C/S(客户端/服务器),B/S(浏览器/服务器)架构进行工作，管理员通过浏览器或者专用客户端程序来下达扫描任务，服务器端负载授权，执行扫描操作并提供扫描结果。 服务器层组件openvas-scanner(扫描器):负责调用各种漏洞检测插件，完成实际的扫描操作。openvas-manager(管理器):负责分配扫描任务，并根据扫描结果生产评估报告。 客户层组件openvas-cli(命令行接口):负责提供从命令行访问OpenVAS服务层程序。greenbone-security-assistant(安装助手):负责提供访问OpenVAS服务层的web接口，便于通过浏览器来执行扫描任务，是使用最简便的客户层组件。openvas安装 实验环境：fedora 27 in virtual box（关闭selinux） 1 更新系统软件 sudo yum update -y 2 安装openvas sudo yum intsall openvas* 3 安装redis数据库 sudo yum install redis* 4 安装sqlite3 sudo yum install sqlite3 5 安装证书生成工具 sudo yum install gnutls-utils 6 编译redis 配置文件 sudo vi /etc/redis.conf取消以下两行注释 12# unixsocket /tmp/redis.sock# unixsocketperm 700 7 运行redis服务 sudo redis-server /etc/redis.conf &amp;(&amp;守护程序，后台运行) 8 解决安装问题检查是否安装成功（openvas-check-setup命令指导安装openvas安装问题） 根据提示进一步操作 sudo openvas-check-setup –v9 按照fix提示，可需要如下命令 下载nvt库sudo greenbone-nvt-sync建立本地scapdata数据库sudo greenbone-scapdata-sync获取证书文件sudo grennbone-certdata-sync创建所需要的目录sudo mkdir -p /var/lib/openvas/openvasmd/gnupg/ (-p表示递归创建目录) 9启动scanner sudo openvassd 10 重建数据库 sudo openvasmd –rebuild 11创建用户admin sudo openvasmd –user=admin –new-password=password(password为自己所设密码) 12 生成证书 sudo openvas-manage-certs -a 13 启动greenbone security assistant sudo gsad –listen=127.0.0.1 –port=9392 14 启动openvas管理器 sudo openvassmd 使用openvas-check-setup -v9 出现it seem like your openvas-9 installation is ok 表示安装成功 登录openvas浏览器在浏览器输入https://127.0.0.1:9392(https不可省略)添加信任 advaced-&gt;add exception-&gt;confirm security exception登录admin 和所设密码进入openvas 补充知识需要对扫描配置做一些更改，为之后端口扫描准备 /var/lib/openvas/plugins/nmap.nasl 对nmap.nasl修改407:if(ver)改成if（svc）,411:log_message最后ver前面添加svc388:后面添加花括号，并且在418对花括号闭合413：svc改为string 最后重启openvass]]></content>
+      <categories>
+        <category>软件安装</category>
+      </categories>
+      <tags>
+        <tag>openvass</tag>
+        <tag>漏洞扫描</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[html学习笔记（一）]]></title>
+    <url>%2F2018%2F02%2F07%2Fhtml%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[什么是html：html是一种网页描述语言，html使用标记标签来描述网页，web浏览器作用是读取html文档，并且以网页的形式显示它们，浏览器不会显示html标签，而是使用标签来解释页面的内容html基础知识—-html标题HTML 标题（Heading）是通过&lt; h1&gt; - &lt; h6&gt; 等标签进行定义的123&lt;h1&gt;This is a heading&lt;/h1&gt;&lt;h2&gt;This is a heading&lt;/h2&gt;&lt;h3&gt;This is a heading&lt;/h3&gt; html段落HTML 段落是通过 &lt; p&gt; 标签进行定义的。1&lt;p&gt;This is a paragraph.&lt;/p&gt; html链接HTML 链接是通过 &lt; a&gt; 标签进行定义的。1&lt;a href=&quot;http://www.baidu.com&quot;&gt;This is a link&lt;/a&gt; 注释：在 href 属性中指定链接的地址。 html图像HTML 图像是通过 &lt; img&gt; 标签进行定义的。1&lt;img src=&quot;w3school.jpg&quot; width=&quot;104&quot; height=&quot;142&quot; /&gt; HTML 标签对大小写不敏感：&lt; P&gt; 等同于 &lt; p&gt;许多网站都使用大写的 HTML 标签。 html水平线&lt; hr&gt; 标签在 HTML 页面中创建水平线。hr 元素可用于分隔内容。12&lt;p&gt;这是一个段落。&lt;/p&gt;&lt;hr&gt; html注释可以将注释插入HTML代码中，这样可以提高其可读性，使代码更易被人理解。浏览器会忽略注释，也不会显示它们1&lt;!-- 这是一个注释 --&gt; 可以将注释插入HTML代码中，这样可以提高其可读性，使代码更易被人理解。浏览器会忽略注释，也不会显示它们]]></content>
+      <categories>
+        <category>html</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
+        <tag>网页</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python 面向对象]]></title>
+    <url>%2F2018%2F02%2F07%2Fpython-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%2F</url>
+    <content type="text"><![CDATA[相关描述： 类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。数据成员：类变量或者实例变量, 用于处理类及其实例对象的相关的数据。方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。局部变量：定义在方法中的变量，只作用于当前实例的类。实例变量：在类的声明中，属性是用变量来表示的。这种变量就称为实例变量，是在类声明的内部但是在类的其他成员方法之外声明的。继承：即一个派生类（derived class）继承基类（base class）的字段和方法。继承也允许把一个派生类的对象作为一个基类对象对待。例如，有这样一个设计：一个Dog类型的对象派生自Animal类，这是模拟”是一个（is-a）”关系（例图，Dog是一个Animal）。实例化：创建一个类的实例，类的具体对象。方法：类中定义的函数。对象：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。tips：接触python半年了，一直就用着python基础的方法写一些简单的脚本，没有实现面向对象。在课堂上老师教过Java面向对象，可是自己上课没有认真去了解，靠着最]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux基本命令]]></title>
+    <url>%2F2018%2F02%2F05%2Flinux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[linux基本命令Linux系统下基本命令（要区分大小写 ）uname 显示版本信息（同win2K的 ver）dir 显示当前目录文件,ls -al 显示包括隐藏文件（同win2K的 dir）pwd 查询当前所在的目录位置cd cd ..回到上一层目录，注意cd 与..之间有空格。cd /返回到根目录。cat 文件名 查看文件内容cat &gt;abc.txt 往abc.txt文件中写上内容。more 文件名 以一页一页的方式显示一个文本文件。cp 复制文件mv 移动文件rm 文件名 删除文件，rm -a 目录名删除目录及子目录mkdir 目录名 建立目录rmdir 删除子目录，目录内没有文档。chmod 设定档案或目录的存取权限grep 在档案中查找字符串diff 档案文件比较find 档案搜寻date 现在的日期、时间who 查询目前和你使用同一台机器的人以及Login时间地点w 查询目前上机者的详细资料whoami 查看自己的帐号名称groups 查看某人的Grouppasswd 更改密码history 查看自己下过的命令ps 显示进程状态kill 停止某进程gcc 黑客通常用它来编译C语言写的文件su 权限转换为指定使用者telnet IP telnet连接对方主机（同win2K），当出现bash$时就说明连接成功。ftp ftp连接上某服务器（同win2K）`]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python学习笔记]]></title>
+    <url>%2F2018%2F02%2F05%2Fpython%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[python简介Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。 1 Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。类似于PHP和Perl语言。 Python 是交互式语言： 这意味着，您可以在一个Python提示符，直接互动执行写你的程序。 Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术。 一：python安装 Python: https://www.python.org/ Python库的安装 1.使用pip工具：pip install 2.自定义安装：下载.exe文件，然后执行安装 3.通过.whl文件直接安装：下载.whl文件，并且安装了pip和wheel Python库文件的下载地址 &gt; http://www.lfd.uci.edu/~gohlke/pythonlibs/ pip install 库, 安装库* pip unstall 库名 卸载 pip search 库 搜索库 二：python语法及变量类型Python的变量命名规则： 1) 变量名称只能包含 字母，数字，下划线2) 变量名称只能以字母开头3) 变量名称不能和关键字相同4) 变量名称严格区分大小写5) 变量需要被赋值6) 一般在变量未赋值前不会引用 Python关键字： 1)函数，模块，类：def,import ,as，return,class,lambda，from2)逻辑运算符：is，not，or，and，false，true，none3)控制结构：break，continue，if，elif，else，for，in，while，pass，with4)错误处理：except，try，finally，raise5)其他：print,del,global,with,assert,yield,exec 类型转换 不同数据类型之间的转换：1) str(variable):转换成字符串，成功就转换，不成功就报错2) int(variable):试着将variable转换成整数,成功返回整数，否则返回valueerror3) bool(variable):转换布尔型，成功就转换4) float(variable): 转换成浮点型，成功就转换，不成功就报错 三：python运算符 Python中的运算符：1) 算术运算符：+ - / % //2) 比较(关系)运算符：== ，！=，&gt;&lt;,&gt;,&lt;,&gt;=,&lt;=3) 逻辑运算符：and ,or,ot4) 身份运算符：is,is,not,5) 集合(成员)运算符：in,not in6) 赋值运算符：= ，+= ，-=，=，/=,%=,/,//=7) 位运算符:&amp;,|,^,~,&lt;&lt;,&gt;&gt; 补充知识 1)help() 函数用于查看函数或模块用途的详细说明；help([object])2) dir() 函数用于获取对象的大部分相关属性；dir([object)3) doc(): 文档字符串，又称为DocStrings, 用它可以为我们的模块、类、函数等添加说明性的文字，使程序易读易懂，更重要的是可以通过Python自带的标准方法将这些描述性文字信息输出。 python自带的标准方法就是doc, 前后各两个下划线。 当不是函数、方法、模块等调用doc，而是具体对象调用时，会显示此对象从属的类型的构造函数的文档字符串]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+</search>
