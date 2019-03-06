@@ -128,7 +128,8 @@
 <meta property="og:description" content="python-nmap相关描述1234python-nmap是一个使用nmap进行端口扫描的python库。它可以很轻易的生成nmap扫描报告，并且可以帮助系统管理员进行自动化扫描任务和生成报告。同时，它也支持nmap脚本输出python。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/8707100-500d15957c968f3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-20T09:04:46.527Z">
+<meta property="og:image" content="http://pn400i0r5.bkt.clouddn.com/python-nmap多线程扫描器/20190304052646217.png">
+<meta property="og:updated_time" content="2019-03-04T09:27:17.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编写python-nmap多线程扫描器">
 <meta name="twitter:description" content="python-nmap相关描述1234python-nmap是一个使用nmap进行端口扫描的python库。它可以很轻易的生成nmap扫描报告，并且可以帮助系统管理员进行自动化扫描任务和生成报告。同时，它也支持nmap脚本输出python。">
@@ -466,7 +467,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-20 17:04:46" itemprop="dateModified" datetime="2019-02-20T17:04:46+08:00">2019-02-20</time>
+                <time title="修改时间：2019-03-04 17:27:17" itemprop="dateModified" datetime="2019-03-04T17:27:17+08:00">2019-03-04</time>
               
             
           </span>
@@ -524,12 +525,13 @@
 <blockquote>
 <p>pip install python-nmap<br><img src="https://upload-images.jianshu.io/upload_images/8707100-500d15957c968f3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>常用的使用方法<br>import nmap # 导入 nmap.py 模块<br>nm = nmap.PortScanner() # 实例化nmap.PortScanner对象<br>nm.scan(‘127.0.0.1’, ‘22-443’) # 扫描127.0.0.1,端口号从22至443<br>nm.command_line() # 获取当前执行扫描的命令行: nmap -oX - -p 22-443 127.0.0.1<br>nm.scaninfo() # 获取nmap扫描信息 {‘tcp’: {‘services’: ‘22-443’, ‘method’: ‘connect’}}<br>nm.all_hosts() # 获取所有已经扫描的主机<br>nm[‘127.0.0.1’].hostname() # 获取一个主机127.0.0.1的主机名，通常为用户记录<br>nm[‘127.0.0.1’].hostnames() # 获取主机127.0.0.1的主机名列表，返回一个字典类型  # [{‘name’:’hostname1’, ‘type’:’PTR’}, {‘name’:’hostname2’, ‘type’:’user’}]<br>nm[‘127.0.0.1’].state() # 获取主机127.0.0.1的状态 (up|down|unknown|skipped)<br>nm[‘127.0.0.1’].all_protocols() # 获取执行的协议 [‘tcp’, ‘udp’] 包含 (ip|tcp|udp|sctp)<br>nm[‘127.0.0.1’][‘tcp’].keys() # 获取tcp协议所有的端口号<br>nm[‘127.0.0.1’].all_tcp() # 获取tcp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].all_udp() # 获取udp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].all_sctp() # 获取sctp协议所有的端口号 (按照端口号大小进行排序)<br>nm[‘127.0.0.1’].has_tcp(22) # 主机127.0.0.1是否有关于22端口的任何信息<br>nm[‘127.0.0.1’][‘tcp’][22] # 获取主机127.0.0.1关于22端口的信息<br>nm[‘127.0.0.1’].tcp(22) # 获取主机127.0.0.1关于22端口的信息<br>nm[‘127.0.0.1’][‘tcp’][22][‘state’] # 获取主机22端口的状态 (open) </p>
 </blockquote>
-<p>python通过调用本地nmap扫描功能进行扫描，以json格式输出</p>
+<p>python通过调用本地nmap扫描功能进行扫描，以json格式输出,可以由下看到输出的格式。我们后续就可以提取想要的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;nmap&apos;:</span><br><span class="line">&#123;&apos;command_line&apos;: &apos;nmap -oX - -n -Pn -sT -sV -p 22 106.15.94.206&apos;, </span><br><span class="line">&apos;scaninfo&apos;: &#123;&apos;tcp&apos;: &#123;&apos;method&apos;: &apos;connect&apos;, &apos;services&apos;: &apos;22&apos;&#125;&#125;,</span><br><span class="line">&apos;scanstats&apos;: &#123;&apos;timestr&apos;: &apos;Wed Feb 13 13:20:33 2019&apos;, &apos;elapsed&apos;: &apos;0.62&apos;, &apos;uphosts&apos;: &apos;1&apos;, &apos;downhosts&apos;: &apos;0&apos;, &apos;totalhosts&apos;: &apos;1&apos;&#125;&#125;, </span><br><span class="line"></span><br><span class="line">&apos;scan&apos;: </span><br><span class="line">&#123;&apos;106.15.94.206&apos;:</span><br><span class="line">&#123;&apos;hostnames&apos;: [&#123;&apos;name&apos;: &apos;&apos;, &apos;type&apos;: &apos;&apos;&#125;], </span><br><span class="line">&apos;addresses&apos;: &#123;&apos;ipv4&apos;: &apos;106.15.94.206&apos;&#125;, </span><br><span class="line">&apos;vendor&apos;: &#123;&#125;,</span><br><span class="line">&apos;status&apos;: &#123;&apos;state&apos;: &apos;up&apos;, &apos;reason&apos;: &apos;user-set&apos;&#125;, </span><br><span class="line">&apos;tcp&apos;: &#123;22: &#123;&apos;state&apos;: &apos;open&apos;, &apos;reason&apos;: &apos;syn-ack&apos;, &apos;name&apos;: &apos;ssh&apos;, &apos;product&apos;: &apos;OpenSSH&apos;, &apos;version&apos;: &apos;7.4&apos;, &apos;extrainfo&apos;: &apos;protocol 2.0&apos;, &apos;conf&apos;: &apos;10&apos;, &apos;cpe&apos;: &apos;cpe:/a:openbsd:openssh:7.4&apos;&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>{‘nmap’: {‘command_line’: ‘nmap -oX - -n -Pn -sT -sV -p 22 106.15.94.206’, ‘scaninfo’: {‘tcp’: {‘method’: ‘connect’, ‘services’: ‘22’}}, ‘scanstats’: {‘timestr’: ‘Wed Feb 13 13:20:33 2019’, ‘elapsed’: ‘0.62’, ‘uphosts’: ‘1’, ‘downhosts’: ‘0’, ‘totalhosts’: ‘1’}}, ‘scan’: {‘106.15.94.206’: {‘hostnames’: [{‘name’: ‘’, ‘type’: ‘’}], ‘addresses’: {‘ipv4’: ‘106.15.94.206’}, ‘vendor’: {}, ‘status’: {‘state’: ‘up’, ‘reason’: ‘user-set’}, ‘tcp’: {22: {‘state’: ‘open’, ‘reason’: ‘syn-ack’, ‘name’: ‘ssh’, ‘product’: ‘OpenSSH’, ‘version’: ‘7.4’, ‘extrainfo’: ‘protocol 2.0’, ‘conf’: ‘10’, ‘cpe’: ‘cpe:/a:openbsd:openssh:7.4’}}}}}</p>
-<hr>
-<h3 id="portsscan-打造多线程端口扫描器"><a href="#portsscan-打造多线程端口扫描器" class="headerlink" title="portsscan 打造多线程端口扫描器"></a>portsscan 打造多线程端口扫描器</h3><p>本项目已同步到github：<a href="https://github.com/teazmh/portscan" target="_blank" rel="noopener">https://github.com/teazmh/portscan</a></p>
-<p>欢迎大家</p>
+<h3 id="portsscan-打造多线程端口扫描器"><a href="#portsscan-打造多线程端口扫描器" class="headerlink" title="portsscan 打造多线程端口扫描器"></a>portsscan 打造多线程端口扫描器</h3><p>读取ip列表,返回iplist：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def read_iplist(inputfile):</span><br><span class="line">    with open(inputfile,&apos;r&apos;) as ip_list:</span><br><span class="line">        lists = ip_list.read().splitlines()</span><br><span class="line">        return lists</span><br></pre></td></tr></table></figure></p>
+<p>设置最大线程数：<br>thread_max_num = threading.Semaphore(thread_no)<br>每个线程对应一个ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def start():</span><br><span class="line">    iplist = read_iplist(input_file)</span><br><span class="line">    print(&apos;ip列表中共有ip&#123;&#125;个&apos;.format(len(iplist)))</span><br><span class="line">    for ip in iplist:</span><br><span class="line">        t = threading.Thread(target=scan_port, args=(ip, output_file))</span><br><span class="line">        t.start()</span><br></pre></td></tr></table></figure></p>
+<p>我们需要输出ip；端口；端口类型；服务；这四个模块，根据上面返回json格式，我们提取相应信息；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for i in port_list:</span><br><span class="line">               if (scaninfos[&apos;scan&apos;][ip][&apos;tcp&apos;][i][&apos;state&apos;] == &apos;open&apos;):</span><br><span class="line">                   port_name = scaninfos[&apos;scan&apos;][ip][&apos;tcp&apos;][i][&apos;name&apos;]</span><br><span class="line">                   version = scaninfos[&apos;scan&apos;][ip][&apos;tcp&apos;][i][&apos;extrainfo&apos;] if scaninfos[&apos;scan&apos;][ip][&apos;tcp&apos;][i][</span><br><span class="line">                                                                                 &apos;extrainfo&apos;] != &apos;&apos; else &apos;unknow version&apos;</span><br><span class="line">                   product = scaninfos[&apos;scan&apos;][ip][&apos;tcp&apos;][i][&apos;product&apos;]</span><br><span class="line">                   port_service = &apos;product: &apos; + product + &apos;     version:&apos; + version</span><br><span class="line">                   info = [ip, i, &apos;tcp&apos;, port_name, port_service]</span><br><span class="line">                   write_csv(info, outfile=outfile)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><img src="http://pn400i0r5.bkt.clouddn.com/python-nmap多线程扫描器/20190304052646217.png" alt><br>本项目已同步到github：<a href="https://github.com/teazmh/portscan" target="_blank" rel="noopener">https://github.com/teazmh/portscan</a></p>
 
       
     </div>
@@ -599,8 +601,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/07/hexoeditor强大的hexo博客工具/" rel="prev" title="hexoeditor强大的hexo博客工具">
-                hexoeditor强大的hexo博客工具 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/21/端口常见漏洞/" rel="prev" title="端口常见漏洞(持续更新)">
+                端口常见漏洞(持续更新) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -680,7 +682,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -709,7 +711,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -754,7 +758,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
