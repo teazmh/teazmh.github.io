@@ -114,7 +114,7 @@
 <meta property="og:description" content="LDAP(Lightweight Directory Access Protocol，轻量级目录访问协议)是用来实现 目录服务 的一种运行于TCP/IP之上的协议。LDAP是指“Lightweight Directory Access Protocol（轻量目录访问协议）”，它是基于X.500协议的，包括了X.500的大部分功能，但是精减掉了那些过于艰深的东西。X.500  X.500是OSI标准">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://picture.manhao6.cn/centos-7-安装-openLDAP/20190317050406384.png">
-<meta property="og:updated_time" content="2019-03-17T09:05:31.685Z">
+<meta property="og:updated_time" content="2019-03-17T09:07:00.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos-7 安装 openLDAP">
 <meta name="twitter:description" content="LDAP(Lightweight Directory Access Protocol，轻量级目录访问协议)是用来实现 目录服务 的一种运行于TCP/IP之上的协议。LDAP是指“Lightweight Directory Access Protocol（轻量目录访问协议）”，它是基于X.500协议的，包括了X.500的大部分功能，但是精减掉了那些过于艰深的东西。X.500  X.500是OSI标准">
@@ -452,7 +452,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-17 17:05:31" itemprop="dateModified" datetime="2019-03-17T17:05:31+08:00">2019-03-17</time>
+                <time title="修改时间：2019-03-17 17:07:00" itemprop="dateModified" datetime="2019-03-17T17:07:00+08:00">2019-03-17</time>
               
             
           </span>
@@ -506,11 +506,7 @@
       
         <p>LDAP(Lightweight Directory Access Protocol，轻量级目录访问协议)是用来实现 目录服务 的一种运行于TCP/IP之上的协议。<br>LDAP是指“Lightweight Directory Access Protocol（轻量目录访问协议）”，它是基于X.500协议的，包括了X.500的大部分功能，但是精减掉了那些过于艰深的东西。<br>X.500</p>
 <blockquote>
-<p>X.500是OSI标准体系中的目录服务模型，它包含了命名空间的定义以及查询与更新目录的协议，但是X.500在很多场景下被认为有些“用力过猛”。而LDAP，虽然像X.500一样也为目录提供了数据/命名空间的模型与协议，但它被设计为运行在TCP/IP网络协议栈上.</p>
-</blockquote>
-<p>目录是一个特殊的数据库，它的数据经常被查询，但是不经常更新。不像普通的数据库，目录不包括对事件（transaction）的支持也不包括回滚特性。目录是很容易被复制的，以便增加它的可用性和可靠性。当目录被复制时，临时的数据不一致情况是允许出现的，只要最终这些数据得到同步即可。<br>一棵LDAP目录树<br><img src="http://picture.manhao6.cn/centos-7-安装-openLDAP/20190317050406384.png" alt><br>LDAP目录中的信息是按照树形结构组织的:</p>
-<blockquote>
-<p>dn:一条记录的位置<br>dc:一条记录所属的区域<br>ou:一条记录所属的组织<br>cn/uid:一条记录的名字/ID</p>
+<p>X.500是OSI标准体系中的目录服务模型，它包含了命名空间的定义以及查询与更新目录的协议，但是X.500在很多场景下被认为有些“用力过猛”。而LDAP，虽然像X.500一样也为目录提供了数据/命名空间的模型与协议，但它被设计为运行在TCP/IP网络协议栈上.<br><a id="more"></a><br>目录是一个特殊的数据库，它的数据经常被查询，但是不经常更新。不像普通的数据库，目录不包括对事件（transaction）的支持也不包括回滚特性。目录是很容易被复制的，以便增加它的可用性和可靠性。当目录被复制时，临时的数据不一致情况是允许出现的，只要最终这些数据得到同步即可。<br>一棵LDAP目录树<br><img src="http://picture.manhao6.cn/centos-7-安装-openLDAP/20190317050406384.png" alt><br>LDAP目录中的信息是按照树形结构组织的:<br>dn:一条记录的位置<br>dc:一条记录所属的区域<br>ou:一条记录所属的组织<br>cn/uid:一条记录的名字/ID</p>
 </blockquote>
 <h2 id="安装OpenLDAP"><a href="#安装OpenLDAP" class="headerlink" title="安装OpenLDAP"></a>安装OpenLDAP</h2><p>ladp:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> openladp-<span class="keyword">server</span> openladp-<span class="keyword">client</span> -y</span><br></pre></td></tr></table></figure></p>
 <p>安装目录<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/</span>openladp</span><br></pre></td></tr></table></figure></p>
@@ -562,7 +558,7 @@
   <p><span>本文标题:</span><a href="/2019/03/01/centos-7-安装-openLDAP/">centos-7 安装 openLDAP</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Tea_Mh 的个人博客">Tea_Mh</a></p>
   <p><span>发布时间:</span>2019年03月01日 - 23:05</p>
-  <p><span>最后更新:</span>2019年03月17日 - 17:05</p>
+  <p><span>最后更新:</span>2019年03月17日 - 17:07</p>
   <p><span>原始链接:</span><a href="/2019/03/01/centos-7-安装-openLDAP/" title="centos-7 安装 openLDAP">www.manhao6.cn/2019/03/01/centos-7-安装-openLDAP/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="www.manhao6.cn/2019/03/01/centos-7-安装-openLDAP/" aria-label="复制成功！"></i></span>
   </p>
