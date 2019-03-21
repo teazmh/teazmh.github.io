@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>www.manhao6.cn/2019/03/01/centos-7-%E5%AE%89%E8%A3%85-openLDAP/</loc>
+    
+    <lastmod>2019-03-21T04:55:31.044Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>www.manhao6.cn/2019/03/18/ldap+Samba%E6%9D%A5%E6%94%AF%E6%8C%81windows%E8%AE%A4%E8%AF%81%EF%BC%88%E6%9C%AA%E5%AE%8C%E6%88%90%EF%BC%89/</loc>
+    
+    <lastmod>2019-03-21T04:54:05.722Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>www.manhao6.cn/2019/03/18/ldap+/</loc>
     
-    <lastmod>2019-03-21T04:49:21.710Z</lastmod>
+    <lastmod>2019-03-21T04:53:06.142Z</lastmod>
     
   </url>
   
@@ -26,13 +40,6 @@
     <loc>www.manhao6.cn/2019/02/09/EnglisReading-2/</loc>
     
     <lastmod>2019-03-21T04:40:24.786Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>www.manhao6.cn/2019/03/01/centos-7-%E5%AE%89%E8%A3%85-openLDAP/</loc>
-    
-    <lastmod>2019-03-20T16:00:42.058Z</lastmod>
     
   </url>
   
