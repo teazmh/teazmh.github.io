@@ -389,7 +389,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.manhao6.cn/2019/03/18/ldap+/">
+    <link itemprop="mainEntityOfPage" href="www.manhao6.cn/2019/03/27/sql注入入侵检测方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tea_Mh">
@@ -409,7 +409,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/18/ldap+/" class="post-title-link" itemprop="url">ldap+Samba来支持windows认证（未完成）</a>
+                <a href="/2019/03/27/sql注入入侵检测方法/" class="post-title-link" itemprop="url">sql注入入侵检测方法</a>
               
             
           </h2>
@@ -434,46 +434,16 @@
                 
               
 
-              <time title="创建时间：2019-03-18 22:58:09" itemprop="dateCreated datePublished" datetime="2019-03-18T22:58:09+08:00">2019-03-18</time>
+              <time title="创建时间：2019-03-27 18:46:01 / 修改时间：19:01:40" itemprop="dateCreated datePublished" datetime="2019-03-27T18:46:01+08:00">2019-03-27</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-21 12:53:06" itemprop="dateModified" datetime="2019-03-21T12:53:06+08:00">2019-03-21</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/软件安装/" itemprop="url" rel="index"><span itemprop="name">软件安装</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -504,13 +474,11 @@
 
       
         
-          <p>userPassword 是使用MD5或者CRYPT加密的，只能构使用EAP-TTLS PAP去验证密码，而PAP验证模式在debug模式下面密码都是明文显示的，安全性似乎并不好<br>使用EAP-PEAP MSCHAPv2 认证方式的话安全性会比较高，但是需要ldap支持NT/LM 所以ldap需要添加samba支持，<br>OpenLDAP每新增一个用户，就自动支持Samba，就可以用这个账号直接访问Samba，不需要存在于本地用户</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>yum install samba samba-common</p>
-<h2 id="添加Samba-LDAP模式"><a href="#添加Samba-LDAP模式" class="headerlink" title="添加Samba LDAP模式"></a>添加Samba LDAP模式</h2><p>OpenLDAP服务器上安装Samba架构,<br>
+          <h2 id="0X01"><a href="#0X01" class="headerlink" title="0X01"></a>0X01</h2><p>  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。对于一个企业的安全，入侵检测至关重要。<br>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/03/18/ldap+/#more" rel="contents">
+              <a class="btn" href="/2019/03/27/sql注入入侵检测方法/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -519,6 +487,165 @@
         
       
     </p></div>
+
+    
+
+    
+    
+    
+    
+   
+
+    
+      
+    
+    
+
+    
+    <div>
+  
+</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.manhao6.cn/2019/03/25/freeradius配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tea_Mh">
+      <meta itemprop="description" content="兜兜的熊猫">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/8707100-c1b6a69a8bfcd8c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/957/format/webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m'bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/25/freeradius配置/" class="post-title-link" itemprop="url">freeradius配置</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-25 16:27:50" itemprop="dateCreated datePublished" datetime="2019-03-25T16:27:50+08:00">2019-03-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-26 00:30:44" itemprop="dateModified" datetime="2019-03-26T00:30:44+08:00">2019-03-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> 如果Freeradius的eap配置中 default_eap_type = peap 如果配置成peap的话，OpenLdap中的用户密码存储的时候可以采用两种方式</p>
+<p>1.）明文存储，Freeradius认证没问题，但是很不安全，因为能看到用户的明文密码</p>
+<p>2.）使用NT-Password加密存储，他其实是xp系统中用的MD4加密，所以OpenLdap中就需要添加samba的支持，然后将sambaNTPassword存储的密码字段映射为Freeradius中的NT-Password字段<br><a href="https://hub.packtpub.com/storing-passwords-using-freeradius-authentication/" target="_blank" rel="noopener">相关加密连接</a></p>
+
+          
+        
+      
+    </div>
 
     
 
@@ -1980,192 +2107,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.manhao6.cn/2019/02/07/hexoeditor强大的hexo博客工具/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Tea_Mh">
-      <meta itemprop="description" content="兜兜的熊猫">
-      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/8707100-c1b6a69a8bfcd8c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/957/format/webp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m'bolg">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/hexoeditor强大的hexo博客工具/" class="post-title-link" itemprop="url">hexoeditor强大的hexo博客工具</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-07 13:06:45" itemprop="dateCreated datePublished" datetime="2019-02-07T13:06:45+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-11 10:31:28" itemprop="dateModified" datetime="2019-03-11T10:31:28+08:00">2019-03-11</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://picture.manhao6.cn/hexoeditor强大的hexo博客工具/20190220051655861.png" alt><br> HexoEditor是由zhuzhuyule继承<a href="https://github.com/Moeditor/Moeditor" target="_blank" rel="noopener">Moeditor</a>进而开发的hexoeditor，支持hexo部署，七牛，腾讯云一键上传图片，对于国内用户非常方便。<br>项目地址:<a href="https://github.com/zhuzhuyule/HexoEditor" target="_blank" rel="noopener">Github</a><br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/07/hexoeditor强大的hexo博客工具/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-    
-   
-
-    
-      
-    
-    
-
-    
-    <div>
-  
-</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2210,7 +2156,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2247,7 +2193,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2314,7 +2260,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

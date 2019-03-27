@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.manhao6.cn/"/>
-  <updated>2019-03-21T04:53:06.142Z</updated>
+  <updated>2019-03-27T11:01:40.859Z</updated>
   <id>www.manhao6.cn/</id>
   
   <author>
@@ -17,28 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ldap+Samba来支持windows认证（未完成）</title>
-    <link href="www.manhao6.cn/2019/03/18/ldap+/"/>
-    <id>www.manhao6.cn/2019/03/18/ldap+/</id>
-    <published>2019-03-18T14:58:09.000Z</published>
-    <updated>2019-03-21T04:53:06.142Z</updated>
+    <title>sql注入入侵检测方法</title>
+    <link href="www.manhao6.cn/2019/03/27/sql%E6%B3%A8%E5%85%A5%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95/"/>
+    <id>www.manhao6.cn/2019/03/27/sql注入入侵检测方法/</id>
+    <published>2019-03-27T10:46:01.000Z</published>
+    <updated>2019-03-27T11:01:40.859Z</updated>
     
-    <content type="html"><![CDATA[<p>userPassword 是使用MD5或者CRYPT加密的，只能构使用EAP-TTLS PAP去验证密码，而PAP验证模式在debug模式下面密码都是明文显示的，安全性似乎并不好<br>使用EAP-PEAP MSCHAPv2 认证方式的话安全性会比较高，但是需要ldap支持NT/LM 所以ldap需要添加samba支持，<br>OpenLDAP每新增一个用户，就自动支持Samba，就可以用这个账号直接访问Samba，不需要存在于本地用户</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>yum install samba samba-common</p><h2 id="添加Samba-LDAP模式"><a href="#添加Samba-LDAP模式" class="headerlink" title="添加Samba LDAP模式"></a>添加Samba LDAP模式</h2><p>OpenLDAP服务器上安装Samba架构,<br><a id="more"></a><br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>samba-<span class="number">4.8</span>.<span class="number">3</span><span class="regexp">/LDAP/</span>samba.ldif  <span class="regexp">/etc/</span>openldap<span class="regexp">/schema/</span></span><br></pre></td></tr></table></figure></p><p>ldap加载samba模式<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="comment">@centos-1 ~]# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/samba.ldif</span></span><br><span class="line"><span class="symbol">SASL</span>/EXTERNAL authentication started</span><br><span class="line"><span class="symbol">SASL</span> username: gidNumber<span class="number">=0</span>+uidNumber<span class="number">=0</span>,<span class="meta">cn</span><span class="symbol">=peercred</span>,<span class="meta">cn</span><span class="symbol">=external</span>,<span class="meta">cn</span><span class="symbol">=auth</span></span><br><span class="line"><span class="symbol">SASL</span> SSF: <span class="number">0</span></span><br><span class="line"><span class="keyword">adding </span>new <span class="meta">entry</span> <span class="string">"cn=samba,cn=schema,cn=config"</span></span><br></pre></td></tr></table></figure></p><p>（3）    配置samba，使samba使用ldap作为存储库<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># freeradius安装</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attribute">ldap添加radius模块</span></span><br></pre></td></tr></table></figure></p><p>ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/openldap.ldif<br>SASL/EXTERNAL authentication started<br>SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth<br>SASL SSF: 0<br>adding new entry “cn=openldap,cn=schema,cn=config<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">配置FreeRadius中ldap模块</span><br><span class="line">vim <span class="regexp">/etc/</span>raddb<span class="regexp">/mods-available/</span>ldap</span><br></pre></td></tr></table></figure></p><p>identity = “cn=admin,dc=qiniu,dc=com” #ldap的管理员账号<br>password = xxxxxxxxx   #管理员密码<br>base_dn = “ou=People,dc=qiniu,dc=com” #认证用户所在组<br>update {<br>       control:Password-With-Header    += ‘userPassword’<br>       control:NT-Password             := ‘sambaNTPassword’<br>}<br><code>`</code><br>在 /etc/raddb/mods-enabled/ 下执行命令，将ldap模块加入radius中 </p><p>#ln -s ../mods-available/ldap .</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="0X01"><a href="#0X01" class="headerlink" title="0X01"></a>0X01</h2><p>  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。对于一个企业的安全，入侵检测至关重要。<br><a id="more"></a></p><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><p>遗留问题:sql入侵检测，xss入侵检测，用户越权行为检测相应日志在哪，怎么防御攻击者清楚痕迹。<br>在渗透测试过程中怎么做到全自动，半自动方面的改造。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;userPassword 是使用MD5或者CRYPT加密的，只能构使用EAP-TTLS PAP去验证密码，而PAP验证模式在debug模式下面密码都是明文显示的，安全性似乎并不好&lt;br&gt;使用EAP-PEAP MSCHAPv2 认证方式的话安全性会比较高，但是需要ldap支持NT/LM 所以ldap需要添加samba支持，&lt;br&gt;OpenLDAP每新增一个用户，就自动支持Samba，就可以用这个账号直接访问Samba，不需要存在于本地用户&lt;/p&gt;
-&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;yum install samba samba-common&lt;/p&gt;
-&lt;h2 id=&quot;添加Samba-LDAP模式&quot;&gt;&lt;a href=&quot;#添加Samba-LDAP模式&quot; class=&quot;headerlink&quot; title=&quot;添加Samba LDAP模式&quot;&gt;&lt;/a&gt;添加Samba LDAP模式&lt;/h2&gt;&lt;p&gt;OpenLDAP服务器上安装Samba架构,&lt;br&gt;
+      &lt;h2 id=&quot;0X01&quot;&gt;&lt;a href=&quot;#0X01&quot; class=&quot;headerlink&quot; title=&quot;0X01&quot;&gt;&lt;/a&gt;0X01&lt;/h2&gt;&lt;p&gt;  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。对于一个企业的安全，入侵检测至关重要。&lt;br&gt;
     
     </summary>
     
-      <category term="软件安装" scheme="www.manhao6.cn/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
     
+  </entry>
+  
+  <entry>
+    <title>freeradius配置</title>
+    <link href="www.manhao6.cn/2019/03/25/freeradius%E9%85%8D%E7%BD%AE/"/>
+    <id>www.manhao6.cn/2019/03/25/freeradius配置/</id>
+    <published>2019-03-25T08:27:50.000Z</published>
+    <updated>2019-03-25T16:30:44.657Z</updated>
     
-      <category term="ldap" scheme="www.manhao6.cn/tags/ldap/"/>
+    <content type="html"><![CDATA[<p> 如果Freeradius的eap配置中 default_eap_type = peap 如果配置成peap的话，OpenLdap中的用户密码存储的时候可以采用两种方式</p><p>1.）明文存储，Freeradius认证没问题，但是很不安全，因为能看到用户的明文密码</p><p>2.）使用NT-Password加密存储，他其实是xp系统中用的MD4加密，所以OpenLdap中就需要添加samba的支持，然后将sambaNTPassword存储的密码字段映射为Freeradius中的NT-Password字段<br><a href="https://hub.packtpub.com/storing-passwords-using-freeradius-authentication/" target="_blank" rel="noopener">相关加密连接</a></p>]]></content>
     
-      <category term="samba" scheme="www.manhao6.cn/tags/samba/"/>
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt; 如果Freeradius的eap配置中 default_eap_type = peap 如果配置成peap的话，OpenLdap中的用户密码存储的时候可以采用两种方式&lt;/p&gt;
+&lt;p&gt;1.）明文存储，Freeradius认证没问题，但是很不安全，因为能看到用户的明文密码&lt;/
+      
+    
+    </summary>
+    
     
   </entry>
   
@@ -352,30 +366,6 @@
   </entry>
   
   <entry>
-    <title>用户密码重置找回 10 种常见姿势</title>
-    <link href="www.manhao6.cn/2018/05/30/%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE%E7%9A%8410%E7%A7%8D%E5%A7%BF%E5%8A%BF/"/>
-    <id>www.manhao6.cn/2018/05/30/任意用户密码重置的10种姿势/</id>
-    <published>2018-05-30T08:02:45.000Z</published>
-    <updated>2019-02-20T08:58:14.526Z</updated>
-    
-    <content type="html"><![CDATA[<p>用户密码重置找回 10 种常见姿势说明：<br>    用户名密码找回通常存在逻辑漏洞，读者因根据实际情况找出相应的漏洞<br>    本片文章是参考补天白帽众学任意用户密码重置的10种姿势视频总结的笔记。<br>视频链接:<a href="http://loudong.360.cn/School/content/id/214" target="_blank" rel="noopener">http://loudong.360.cn/School/content/id/214</a><br><a id="more"></a></p><h2 id="1-验证码不失效"><a href="#1-验证码不失效" class="headerlink" title="1.验证码不失效"></a>1.验证码不失效</h2><h2 id="2-本地验证绕过"><a href="#2-本地验证绕过" class="headerlink" title="2.本地验证绕过"></a>2.本地验证绕过</h2><h2 id="3-验证码直接返回"><a href="#3-验证码直接返回" class="headerlink" title="3.验证码直接返回"></a>3.验证码直接返回</h2><h2 id="4-验证码未绑定用户"><a href="#4-验证码未绑定用户" class="headerlink" title="4.验证码未绑定用户"></a>4.验证码未绑定用户</h2><h2 id="5-修改接受验证码的手机或邮箱"><a href="#5-修改接受验证码的手机或邮箱" class="headerlink" title="5.修改接受验证码的手机或邮箱"></a>5.修改接受验证码的手机或邮箱</h2><h2 id="6-跳过验证步骤"><a href="#6-跳过验证步骤" class="headerlink" title="6.跳过验证步骤"></a>6.跳过验证步骤</h2><h2 id="7-未校验用户字段的值"><a href="#7-未校验用户字段的值" class="headerlink" title="7.未校验用户字段的值"></a>7.未校验用户字段的值</h2><h2 id="8-修改密码处-id-可替换"><a href="#8-修改密码处-id-可替换" class="headerlink" title="8.修改密码处 id 可替换"></a>8.修改密码处 id 可替换</h2><h2 id="9-cookie-值的替换"><a href="#9-cookie-值的替换" class="headerlink" title="9.cookie 值的替换"></a>9.cookie 值的替换</h2><h2 id="10-修改信息时替换字段值"><a href="#10-修改信息时替换字段值" class="headerlink" title="10.修改信息时替换字段值"></a>10.修改信息时替换字段值</h2>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;用户密码重置找回 10 种常见姿势说明：&lt;br&gt;    用户名密码找回通常存在逻辑漏洞，读者因根据实际情况找出相应的漏洞&lt;br&gt;    本片文章是参考补天白帽众学任意用户密码重置的10种姿势视频总结的笔记。&lt;br&gt;视频链接:&lt;a href=&quot;http://loudong.360.cn/School/content/id/214&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://loudong.360.cn/School/content/id/214&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="逻辑漏洞" scheme="www.manhao6.cn/categories/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/"/>
-    
-    
-      <category term="逻辑漏洞" scheme="www.manhao6.cn/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/"/>
-    
-      <category term="修改密码" scheme="www.manhao6.cn/tags/%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
     <title>sqli-lab学习笔记less6-7（双重查询）</title>
     <link href="www.manhao6.cn/2018/05/07/%E5%8F%8C%E9%87%8D%E6%B3%A8%E5%85%A5%E6%9F%A5%E8%AF%A2/"/>
     <id>www.manhao6.cn/2018/05/07/双重注入查询/</id>
@@ -448,29 +438,6 @@
   </entry>
   
   <entry>
-    <title>python 面向对象</title>
-    <link href="www.manhao6.cn/2018/02/07/python-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    <id>www.manhao6.cn/2018/02/07/python-面向对象/</id>
-    <published>2018-02-07T05:06:45.000Z</published>
-    <updated>2019-02-20T09:00:30.357Z</updated>
-    
-    <content type="html"><![CDATA[<p>相关描述：</p><p><pre><br><code><br>类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。<br>类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。<br>数据成员：类变量或者实例变量, 用于处理类及其实例对象的相关的数据。<br>方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。<br>局部变量：定义在方法中的变量，只作用于当前实例的类。<br>实例变量：在类的声明中，属性是用变量来表示的。这种变量就称为实例变量，是在类声明的内部但是在类的其他成员方法之外声明的。<br>继承：即一个派生类（derived class）继承基类（base class）的字段和方法。继承也允许把一个派生类的对象作为一个基类对象对待。例如，有这样一个设计：一个Dog类型的对象派生自Animal类，这是模拟”是一个（is-a）”关系（例图，Dog是一个Animal）。<br>实例化：创建一个类的实例，类的具体对象。<br>方法：类中定义的函数。<br>对象：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。<br></code><br></pre><br><a id="more"></a><br>tips：<br>接触python半年了，一直就用着python基础的方法写一些简单的脚本，没有实现面向对象。在课堂上老师教过Java面向对象，可是自己上课没有认真去了解，靠着最</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;相关描述：&lt;/p&gt;
-&lt;p&gt;&lt;pre&gt;&lt;br&gt;&lt;code&gt;&lt;br&gt;类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。&lt;br&gt;类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。&lt;br&gt;数据成员：类变量或者实例变量, 用于处理类及其实例对象的相关的数据。&lt;br&gt;方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。&lt;br&gt;局部变量：定义在方法中的变量，只作用于当前实例的类。&lt;br&gt;实例变量：在类的声明中，属性是用变量来表示的。这种变量就称为实例变量，是在类声明的内部但是在类的其他成员方法之外声明的。&lt;br&gt;继承：即一个派生类（derived class）继承基类（base class）的字段和方法。继承也允许把一个派生类的对象作为一个基类对象对待。例如，有这样一个设计：一个Dog类型的对象派生自Animal类，这是模拟”是一个（is-a）”关系（例图，Dog是一个Animal）。&lt;br&gt;实例化：创建一个类的实例，类的具体对象。&lt;br&gt;方法：类中定义的函数。&lt;br&gt;对象：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。&lt;br&gt;&lt;/code&gt;&lt;br&gt;&lt;/pre&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="www.manhao6.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="www.manhao6.cn/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
     <title>linux 命令</title>
     <link href="www.manhao6.cn/2018/02/05/linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/"/>
     <id>www.manhao6.cn/2018/02/05/linux基本命令/</id>
@@ -491,6 +458,35 @@
       <category term="linux" scheme="www.manhao6.cn/tags/linux/"/>
     
       <category term="命令" scheme="www.manhao6.cn/tags/%E5%91%BD%E4%BB%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python学习笔记</title>
+    <link href="www.manhao6.cn/2018/02/05/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>www.manhao6.cn/2018/02/05/python学习笔记/</id>
+    <published>2018-02-05T15:02:45.000Z</published>
+    <updated>2019-02-20T09:05:54.799Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="python简介"><a href="#python简介" class="headerlink" title="python简介"></a>python简介</h2><p>Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。<br>Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。<br>像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。<br>现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。</p><ul><li>1 Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。类似于PHP和Perl语言。</li><li>Python 是交互式语言： 这意味着，您可以在一个Python提示符，直接互动执行写你的程序。</li><li>Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术。</li></ul><h2 id="一：python安装"><a href="#一：python安装" class="headerlink" title="一：python安装"></a>一：python安装</h2><blockquote><p>Python: <a href="https://www.python.org/" target="_blank" rel="noopener">https://www.python.org/</a><br> Python库的安装<br>   1.使用pip工具：pip install <em>2.自定义安装：下载</em>.exe文件，然后执行安装<br>   3.通过.whl文件直接安装：下载<em>.whl文件，并且安装了pip和wheel<br> Python库文件的下载地址 &gt; <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a><br>   pip install 库</em>, 安装库*<br>   pip unstall 库名 卸载<br>   pip search 库 搜索库<br><a id="more"></a></p></blockquote><h2 id="二：python语法及变量类型"><a href="#二：python语法及变量类型" class="headerlink" title="二：python语法及变量类型"></a>二：python语法及变量类型</h2><h3 id="Python的变量命名规则："><a href="#Python的变量命名规则：" class="headerlink" title="Python的变量命名规则："></a>Python的变量命名规则：</h3><blockquote><p>1) 变量名称只能包含 字母，数字，下划线<br>2) 变量名称只能以字母开头<br>3) 变量名称不能和关键字相同<br>4) 变量名称严格区分大小写<br>5) 变量需要被赋值<br>6) 一般在变量未赋值前不会引用</p></blockquote><h3 id="Python关键字："><a href="#Python关键字：" class="headerlink" title="Python关键字："></a>Python关键字：</h3><blockquote><p>1)函数，模块，类：def,import ,as，return,class,lambda，from<br>2)逻辑运算符：is，not，or，and，false，true，none<br>3)控制结构：break，continue，if，elif，else，for，in，while，pass，with<br>4)错误处理：except，try，finally，raise<br>5)其他：print,del,global,with,assert,yield,exec</p></blockquote><h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><blockquote><p>不同数据类型之间的转换：<br>1) str(variable):转换成字符串，成功就转换，不成功就报错<br>2) int(variable):试着将variable转换成整数,成功返回整数，否则返回valueerror<br>3) bool(variable):转换布尔型，成功就转换<br>4) float(variable): 转换成浮点型，成功就转换，不成功就报错</p></blockquote><h2 id="三：python运算符"><a href="#三：python运算符" class="headerlink" title="三：python运算符"></a>三：python运算符</h2><blockquote><p>Python中的运算符：<br>1) 算术运算符：+ - / % <em> //<br>2) 比较(关系)运算符：== ，！=，&gt;&lt;,&gt;,&lt;,&gt;=,&lt;=<br>3) 逻辑运算符：and ,or,ot<br>4) 身份运算符：is,is,not,<br>5) 集合(成员)运算符：in,not in<br>6) 赋值运算符：= ，+= ，-=，=，/=,%=,</em>/,//=<br>7) 位运算符:&amp;,|,^,~,&lt;&lt;,&gt;&gt;</p></blockquote><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><blockquote><p>1)help() 函数用于查看函数或模块用途的详细说明；help([object])<br>2) dir() 函数用于获取对象的大部分相关属性；dir([object)<br>3) <strong>doc</strong>(): 文档字符串，又称为DocStrings, 用它可以为我们的模块、类、函数等添加说明性的文字，使程序易读易懂，更重要的是可以通过Python自带的标准方法将这些描述性文字信息输出。 python自带的标准方法就是<strong>doc</strong>, 前后各两个下划线。 当不是函数、方法、模块等调用doc，而是具体对象调用时，会显示此对象从属的类型的构造函数的文档字符串</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;python简介&quot;&gt;&lt;a href=&quot;#python简介&quot; class=&quot;headerlink&quot; title=&quot;python简介&quot;&gt;&lt;/a&gt;python简介&lt;/h2&gt;&lt;p&gt;Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。&lt;br&gt;Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。&lt;br&gt;像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。&lt;br&gt;现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。类似于PHP和Perl语言。&lt;/li&gt;
+&lt;li&gt;Python 是交互式语言： 这意味着，您可以在一个Python提示符，直接互动执行写你的程序。&lt;/li&gt;
+&lt;li&gt;Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;一：python安装&quot;&gt;&lt;a href=&quot;#一：python安装&quot; class=&quot;headerlink&quot; title=&quot;一：python安装&quot;&gt;&lt;/a&gt;一：python安装&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Python: &lt;a href=&quot;https://www.python.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.python.org/&lt;/a&gt;&lt;br&gt; Python库的安装&lt;br&gt;   1.使用pip工具：pip install &lt;em&gt;2.自定义安装：下载&lt;/em&gt;.exe文件，然后执行安装&lt;br&gt;   3.通过.whl文件直接安装：下载&lt;em&gt;.whl文件，并且安装了pip和wheel&lt;br&gt; Python库文件的下载地址 &amp;gt; &lt;a href=&quot;http://www.lfd.uci.edu/~gohlke/pythonlibs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://www.lfd.uci.edu/~gohlke/pythonlibs/&lt;/a&gt;&lt;br&gt;   pip install 库&lt;/em&gt;, 安装库*&lt;br&gt;   pip unstall 库名 卸载&lt;br&gt;   pip search 库 搜索库&lt;br&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="www.manhao6.cn/categories/python/"/>
+    
+    
+      <category term="python" scheme="www.manhao6.cn/tags/python/"/>
     
   </entry>
   
