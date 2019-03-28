@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.manhao6.cn/"/>
-  <updated>2019-03-27T15:24:21.404Z</updated>
+  <updated>2019-03-28T09:14:17.692Z</updated>
   <id>www.manhao6.cn/</id>
   
   <author>
@@ -17,16 +17,29 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>20190327232421</title>
-    <link href="www.manhao6.cn/2019/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1thinkphp%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
-    <id>www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞/</id>
+    <title>记一次thinkphp上传漏洞（白盒审计）</title>
+    <link href="www.manhao6.cn/2019/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1thinkphp%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%EF%BC%88%E7%99%BD%E7%9B%92%E5%AE%A1%E8%AE%A1%EF%BC%89/"/>
+    <id>www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/</id>
     <published>2019-03-27T15:24:21.000Z</published>
-    <updated>2019-03-27T15:24:21.404Z</updated>
+    <updated>2019-03-28T09:14:17.692Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0x01-背景"><a href="#0x01-背景" class="headerlink" title="0x01 背景"></a>0x01 背景</h2><p>今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。<br>我们知道，上传文件漏洞能利用要有3个条件：</p><ol><li>能绕过文件类型限制</li><li>知道文件路径</li><li>文件夹能解析代码</li></ol><p>本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个经验可以根据相应开发框架开发文档来探测命名规律）</p><h2 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h2><p>在某后台有个长传xlsx文件入口<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328121307697.png" alt><br>在管理后台发现有一个文件上传点，通过上传，发现做了限制，只能上传xlsx. csv等后缀文件。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328123504572.png" alt><br>上传正确的xlsx文件显示，并且能解析出来对应xlsx表格对应字段文字显示到网页中。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124237009.png" alt><br>通过bp拦截重发，修改文件后缀.php。发现成功了系统system error提示错误。而不是返回false。猜测可能是服务器无法解析php文件，提取出相应的文字，而造成系统错误。<br>因为白盒测试，直接去服务器查看目录，发现真的上传传成功。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328045136847.png" alt><br>显示已经长传成功了，但我们怎么知道服务器长传具体路径了。<br>由于采用thinkphp框架，有相应的开发手册。我们就查看了对应开发手册关于文件上传开发<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124532032.png" alt><br>官方文档提供了多种的机制来命名文件–&gt;<a href="https://www.kancloud.cn/manual/thinkphp5_1/354121" target="_blank" rel="noopener">TinkPHP开发手册5.1-上传</a>：</p><ol><li>会在上传目录下面生成以当前日期为子目录，微秒时间的md5编码为文件名的文件（上图）</li><li>自定义命名规则，可以在rule方法中传入函数或者方法</li><li>保留原文件名称</li><li>上传文件的哈希散列值</li></ol><p>通过对第三种和第四中情况猜测，发现保留原文件名这种方式文件不存在。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328125643439.png" alt><br>md5处理也不存在<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328125948278.png" alt><br>sha1处理也不存在<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328010130436.png" alt><br>则现在只是第一种，第二种方式。如果采用第二种方式，我们就很难猜到命名规则了。<br>第一条规则总结两点</p><ul><li>上传目录下面生成以当前日期为子目录，</li><li>微秒时间的md5编码为文件名的文件</li></ul><p>通常查找php中microtime()，构造一个php语句。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?php</span></span></span><br><span class="line"><span class="php"><span class="keyword">echo</span>(microtime(ture));</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br></pre></td></tr></table></figure></p><p><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328011152310.png" alt><br>通过本地测试，如上图，每次刷新，各位上数刚好是秒，小数点后面应该就是秒一下单位，毫秒或者微秒。发现以上规律我们就可以通过脚本生产一段时间内所有的md5编码<br>于是，我们刚上传的时候，记下microtime的时间，然后大概间隔1-5秒，通过脚本生成这1-5秒钟生成的所有md5编码的微秒时间</p><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">import <span class="built_in">os</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">os</span>.<span class="built_in">path</span>.exists(<span class="string">'b.txt'</span>):</span><br><span class="line">    <span class="built_in">os</span>.<span class="built_in">remove</span>(<span class="string">'b.txt'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">393832</span>, <span class="number">500000</span>):</span><br><span class="line">    temp = str(i)</span><br><span class="line">    temp1 = temp[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">    temp2 = temp[<span class="number">2</span>:<span class="number">6</span>]</span><br><span class="line">    # temp3 = int(<span class="string">"&#123;&#125;.&#123;&#125;"</span>.<span class="built_in">format</span>(temp1, temp2))</span><br><span class="line">    temp3 = <span class="string">"&#123;&#125;&#123;&#125;.&#123;&#125;"</span>.<span class="built_in">format</span>(<span class="number">15536954</span>, temp1, temp2)</span><br><span class="line">    a = hashlib.md5(temp3.encode()).hexdigest()</span><br><span class="line">    with <span class="built_in">open</span>(<span class="string">'b.txt'</span>, <span class="string">'a'</span>) as f:</span><br><span class="line">        f.<span class="built_in">write</span>(a + <span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure><p>因为白盒测试，直接在系统钟找到相应文件名字，通过搜索发现一样。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328044959349.png" alt><br>通过与相关人员沟通，发现采取的也是这个命名规则<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328051139213.png" alt><br>结果直接搜索相应目录文件也解析成功了phpinfo（）（图忘截了，漏洞也修复了）</p><h2 id="0x03-结论"><a href="#0x03-结论" class="headerlink" title="0x03 结论"></a>0x03 结论</h2><p>通过这次部分在白盒情况下测试，成功看到上传漏洞，通过开源框架开发文档猜解到用户上传的文档系统保存的文件名。也给自己在以后上传文件利用提供了一种方法。这也给开发人员提了个醒，不要一味地按照官方开发文档推荐重命名规则，就会给攻击者留下利用规律，如果按照开发文档<br>第二条，自定义命名规则，就会加大攻击者猜解系统命名的难度，也大大降低了漏洞被利用的风险。<br>对于上传漏洞防护策略总结有如下几点：</p><ol><li>可以使用黑名单以及白名单结合的方式限制文件上传</li><li>文件的上传目录设为不可执行</li><li>使用JS对文件的大小、拓展名进行剑测</li><li>使用取随机文件名，可以是md5也可以是时间（对于开源框架，尽量自定义文件随机名）</li></ol>]]></content>
     
     <summary type="html">
     
+      
+      
+        &lt;h2 id=&quot;0x01-背景&quot;&gt;&lt;a href=&quot;#0x01-背景&quot; class=&quot;headerlink&quot; title=&quot;0x01 背景&quot;&gt;&lt;/a&gt;0x01 背景&lt;/h2&gt;&lt;p&gt;今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。&lt;br&gt;我
+      
+    
     </summary>
     
+      <category term="文件上传" scheme="www.manhao6.cn/categories/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    
+    
+      <category term="thinkphp" scheme="www.manhao6.cn/tags/thinkphp/"/>
+    
+      <category term="上传" scheme="www.manhao6.cn/tags/%E4%B8%8A%E4%BC%A0/"/>
     
   </entry>
   
