@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="www.manhao6.cn/"/>
-  <updated>2019-03-27T11:01:40.859Z</updated>
+  <updated>2019-03-27T15:24:21.404Z</updated>
   <id>www.manhao6.cn/</id>
   
   <author>
@@ -17,17 +17,31 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>20190327232421</title>
+    <link href="www.manhao6.cn/2019/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1thinkphp%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/"/>
+    <id>www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞/</id>
+    <published>2019-03-27T15:24:21.000Z</published>
+    <updated>2019-03-27T15:24:21.404Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>sql注入入侵检测方法</title>
     <link href="www.manhao6.cn/2019/03/27/sql%E6%B3%A8%E5%85%A5%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95/"/>
     <id>www.manhao6.cn/2019/03/27/sql注入入侵检测方法/</id>
     <published>2019-03-27T10:46:01.000Z</published>
-    <updated>2019-03-27T11:01:40.859Z</updated>
+    <updated>2019-03-27T12:33:08.725Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="0X01"><a href="#0X01" class="headerlink" title="0X01"></a>0X01</h2><p>  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。对于一个企业的安全，入侵检测至关重要。<br><a id="more"></a></p><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><p>遗留问题:sql入侵检测，xss入侵检测，用户越权行为检测相应日志在哪，怎么防御攻击者清楚痕迹。<br>在渗透测试过程中怎么做到全自动，半自动方面的改造。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="0X01"><a href="#0X01" class="headerlink" title="0X01"></a>0X01</h2><p>  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为 。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。<br><a id="more"></a></p><h2 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h2><p>遗留问题:sql入侵检测，xss入侵检测，用户越权行为检测相应日志在哪，怎么防御攻击者清楚痕迹，以及攻击溯源。<br>在渗透测试过程中怎么做到全自动，半自动方面的改造。</p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;0X01&quot;&gt;&lt;a href=&quot;#0X01&quot; class=&quot;headerlink&quot; title=&quot;0X01&quot;&gt;&lt;/a&gt;0X01&lt;/h2&gt;&lt;p&gt;  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。对于一个企业的安全，入侵检测至关重要。&lt;br&gt;
+      &lt;h2 id=&quot;0X01&quot;&gt;&lt;a href=&quot;#0X01&quot; class=&quot;headerlink&quot; title=&quot;0X01&quot;&gt;&lt;/a&gt;0X01&lt;/h2&gt;&lt;p&gt;  今天去中国电信网络与信息安全研究院面试，面试结束后收获很多，对比其他公司面试。感觉自己到自己不足，思考角度问题的不同。在思考安全问题的基础上，以前都是思考安全问题的成因，安全问题的防护。而没有具体思考当做了防护后怎么判断该安全问题的入侵行为 。安全是一个持续的过程，没有全面的防护手段。当新的攻击手段出现时，防护体系就不能防御了，但是入侵检测能检测到攻击测行为，从而做出相应的应急响应过程。&lt;br&gt;
     
     </summary>
     
@@ -458,35 +472,6 @@
       <category term="linux" scheme="www.manhao6.cn/tags/linux/"/>
     
       <category term="命令" scheme="www.manhao6.cn/tags/%E5%91%BD%E4%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python学习笔记</title>
-    <link href="www.manhao6.cn/2018/02/05/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>www.manhao6.cn/2018/02/05/python学习笔记/</id>
-    <published>2018-02-05T15:02:45.000Z</published>
-    <updated>2019-02-20T09:05:54.799Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="python简介"><a href="#python简介" class="headerlink" title="python简介"></a>python简介</h2><p>Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。<br>Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。<br>像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。<br>现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。</p><ul><li>1 Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。类似于PHP和Perl语言。</li><li>Python 是交互式语言： 这意味着，您可以在一个Python提示符，直接互动执行写你的程序。</li><li>Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术。</li></ul><h2 id="一：python安装"><a href="#一：python安装" class="headerlink" title="一：python安装"></a>一：python安装</h2><blockquote><p>Python: <a href="https://www.python.org/" target="_blank" rel="noopener">https://www.python.org/</a><br> Python库的安装<br>   1.使用pip工具：pip install <em>2.自定义安装：下载</em>.exe文件，然后执行安装<br>   3.通过.whl文件直接安装：下载<em>.whl文件，并且安装了pip和wheel<br> Python库文件的下载地址 &gt; <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a><br>   pip install 库</em>, 安装库*<br>   pip unstall 库名 卸载<br>   pip search 库 搜索库<br><a id="more"></a></p></blockquote><h2 id="二：python语法及变量类型"><a href="#二：python语法及变量类型" class="headerlink" title="二：python语法及变量类型"></a>二：python语法及变量类型</h2><h3 id="Python的变量命名规则："><a href="#Python的变量命名规则：" class="headerlink" title="Python的变量命名规则："></a>Python的变量命名规则：</h3><blockquote><p>1) 变量名称只能包含 字母，数字，下划线<br>2) 变量名称只能以字母开头<br>3) 变量名称不能和关键字相同<br>4) 变量名称严格区分大小写<br>5) 变量需要被赋值<br>6) 一般在变量未赋值前不会引用</p></blockquote><h3 id="Python关键字："><a href="#Python关键字：" class="headerlink" title="Python关键字："></a>Python关键字：</h3><blockquote><p>1)函数，模块，类：def,import ,as，return,class,lambda，from<br>2)逻辑运算符：is，not，or，and，false，true，none<br>3)控制结构：break，continue，if，elif，else，for，in，while，pass，with<br>4)错误处理：except，try，finally，raise<br>5)其他：print,del,global,with,assert,yield,exec</p></blockquote><h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><blockquote><p>不同数据类型之间的转换：<br>1) str(variable):转换成字符串，成功就转换，不成功就报错<br>2) int(variable):试着将variable转换成整数,成功返回整数，否则返回valueerror<br>3) bool(variable):转换布尔型，成功就转换<br>4) float(variable): 转换成浮点型，成功就转换，不成功就报错</p></blockquote><h2 id="三：python运算符"><a href="#三：python运算符" class="headerlink" title="三：python运算符"></a>三：python运算符</h2><blockquote><p>Python中的运算符：<br>1) 算术运算符：+ - / % <em> //<br>2) 比较(关系)运算符：== ，！=，&gt;&lt;,&gt;,&lt;,&gt;=,&lt;=<br>3) 逻辑运算符：and ,or,ot<br>4) 身份运算符：is,is,not,<br>5) 集合(成员)运算符：in,not in<br>6) 赋值运算符：= ，+= ，-=，=，/=,%=,</em>/,//=<br>7) 位运算符:&amp;,|,^,~,&lt;&lt;,&gt;&gt;</p></blockquote><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><blockquote><p>1)help() 函数用于查看函数或模块用途的详细说明；help([object])<br>2) dir() 函数用于获取对象的大部分相关属性；dir([object)<br>3) <strong>doc</strong>(): 文档字符串，又称为DocStrings, 用它可以为我们的模块、类、函数等添加说明性的文字，使程序易读易懂，更重要的是可以通过Python自带的标准方法将这些描述性文字信息输出。 python自带的标准方法就是<strong>doc</strong>, 前后各两个下划线。 当不是函数、方法、模块等调用doc，而是具体对象调用时，会显示此对象从属的类型的构造函数的文档字符串</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;python简介&quot;&gt;&lt;a href=&quot;#python简介&quot; class=&quot;headerlink&quot; title=&quot;python简介&quot;&gt;&lt;/a&gt;python简介&lt;/h2&gt;&lt;p&gt;Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷兰国家数学和计算机科学研究所设计出来的。&lt;br&gt;Python 本身也是由诸多其他语言发展而来的,这包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的脚本语言等等。&lt;br&gt;像 Perl 语言一样，Python 源代码同样遵循 GPL(GNU General Public License)协议。&lt;br&gt;现在 Python 是由一个核心开发团队在维护，Guido van Rossum 仍然占据着至关重要的作用，指导其进展。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1 Python 是一种解释型语言： 这意味着开发过程中没有了编译这个环节。类似于PHP和Perl语言。&lt;/li&gt;
-&lt;li&gt;Python 是交互式语言： 这意味着，您可以在一个Python提示符，直接互动执行写你的程序。&lt;/li&gt;
-&lt;li&gt;Python 是面向对象语言: 这意味着Python支持面向对象的风格或代码封装在对象的编程技术。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;一：python安装&quot;&gt;&lt;a href=&quot;#一：python安装&quot; class=&quot;headerlink&quot; title=&quot;一：python安装&quot;&gt;&lt;/a&gt;一：python安装&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Python: &lt;a href=&quot;https://www.python.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.python.org/&lt;/a&gt;&lt;br&gt; Python库的安装&lt;br&gt;   1.使用pip工具：pip install &lt;em&gt;2.自定义安装：下载&lt;/em&gt;.exe文件，然后执行安装&lt;br&gt;   3.通过.whl文件直接安装：下载&lt;em&gt;.whl文件，并且安装了pip和wheel&lt;br&gt; Python库文件的下载地址 &amp;gt; &lt;a href=&quot;http://www.lfd.uci.edu/~gohlke/pythonlibs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://www.lfd.uci.edu/~gohlke/pythonlibs/&lt;/a&gt;&lt;br&gt;   pip install 库&lt;/em&gt;, 安装库*&lt;br&gt;   pip unstall 库名 卸载&lt;br&gt;   pip search 库 搜索库&lt;br&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="www.manhao6.cn/categories/python/"/>
-    
-    
-      <category term="python" scheme="www.manhao6.cn/tags/python/"/>
     
   </entry>
   
