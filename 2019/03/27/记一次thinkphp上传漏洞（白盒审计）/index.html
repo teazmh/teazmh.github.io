@@ -105,13 +105,13 @@
 
 
 
-  <meta name="description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码  本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个">
+  <meta name="description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码">
 <meta name="keywords" content="thinkphp,上传">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次thinkphp上传漏洞（白盒审计）">
 <meta property="og:url" content="www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/index.html">
 <meta property="og:site_name" content="m&#39;bolg">
-<meta property="og:description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码  本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个">
+<meta property="og:description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328121307697.png">
 <meta property="og:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328123504572.png">
@@ -124,10 +124,10 @@
 <meta property="og:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328011152310.png">
 <meta property="og:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328044959349.png">
 <meta property="og:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328051139213.png">
-<meta property="og:updated_time" content="2019-03-28T09:19:45.296Z">
+<meta property="og:updated_time" content="2019-03-28T09:21:50.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次thinkphp上传漏洞（白盒审计）">
-<meta name="twitter:description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码  本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个">
+<meta name="twitter:description" content="0x01 背景今天刚回到宿舍，就被同学叫去讨论一个后台的上传漏洞（经过某公司授权，该公司好像被搞过了）。我们知道，上传文件漏洞能利用要有3个条件：  能绕过文件类型限制 知道文件路径 文件夹能解析代码">
 <meta name="twitter:image" content="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328121307697.png">
 
 
@@ -462,7 +462,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-28 17:19:45" itemprop="dateModified" datetime="2019-03-28T17:19:45+08:00">2019-03-28</time>
+                <time title="修改时间：2019-03-28 17:21:50" itemprop="dateModified" datetime="2019-03-28T17:21:50+08:00">2019-03-28</time>
               
             
           </span>
@@ -518,15 +518,14 @@
 <ol>
 <li>能绕过文件类型限制</li>
 <li>知道文件路径</li>
-<li>文件夹能解析代码</li>
-</ol>
-<p>本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个经验可以根据相应开发框架开发文档来探测命名规律）</p>
-<h2 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h2><p>在某后台有个长传xlsx文件入口<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328121307697.png" alt><br>在管理后台发现有一个文件上传点，通过上传，发现做了限制，只能上传xlsx. csv等后缀文件。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328123504572.png" alt><br>上传正确的xlsx文件显示，并且能解析出来对应xlsx表格对应字段文字显示到网页中。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124237009.png" alt><br>通过bp拦截重发，修改文件后缀.php。发现成功了系统system error提示错误。而不是返回false。猜测可能是服务器无法解析php文件，提取出相应的文字，而造成系统错误。<br>因为白盒测试，直接去服务器查看目录，发现真的上传传成功。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328045136847.png" alt><br>显示已经长传成功了，但我们怎么知道服务器长传具体路径了。<br>由于采用thinkphp框架，有相应的开发手册。我们就查看了对应开发手册关于文件上传开发<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124532032.png" alt><br>官方文档提供了多种的机制来命名文件–&gt;<a href="https://www.kancloud.cn/manual/thinkphp5_1/354121" target="_blank" rel="noopener">TinkPHP开发手册5.1-上传</a>：</p>
-<ol>
+<li>文件夹能解析代码<a id="more"></a>
+本次主要在白盒测试过程，发现漏洞上传主要是利用thinkphp开发文档探测到上传漏洞文件路径，从而漏洞利用。（以前做上传的过程中，上传成功后，由于不知道上传路径，长传文件名而放弃,本次也给自己一个经验可以根据相应开发框架开发文档来探测命名规律）<h2 id="0x02-过程"><a href="#0x02-过程" class="headerlink" title="0x02 过程"></a>0x02 过程</h2>在某后台有个长传xlsx文件入口<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328121307697.png" alt><br>在管理后台发现有一个文件上传点，通过上传，发现做了限制，只能上传xlsx. csv等后缀文件。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328123504572.png" alt><br>上传正确的xlsx文件显示，并且能解析出来对应xlsx表格对应字段文字显示到网页中。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124237009.png" alt><br>通过bp拦截重发，修改文件后缀.php。发现成功了系统system error提示错误。而不是返回false。猜测可能是服务器无法解析php文件，提取出相应的文字，而造成系统错误。<br>因为白盒测试，直接去服务器查看目录，发现真的上传传成功。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328045136847.png" alt><br>显示已经长传成功了，但我们怎么知道服务器长传具体路径了。<br>由于采用thinkphp框架，有相应的开发手册。我们就查看了对应开发手册关于文件上传开发<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328124532032.png" alt><br>官方文档提供了多种的机制来命名文件–&gt;<a href="https://www.kancloud.cn/manual/thinkphp5_1/354121" target="_blank" rel="noopener">TinkPHP开发手册5.1-上传</a>：<ol>
 <li>会在上传目录下面生成以当前日期为子目录，微秒时间的md5编码为文件名的文件（上图）</li>
 <li>自定义命名规则，可以在rule方法中传入函数或者方法</li>
 <li>保留原文件名称</li>
 <li>上传文件的哈希散列值</li>
+</ol>
+</li>
 </ol>
 <p>通过对第三种和第四中情况猜测，发现保留原文件名这种方式文件不存在。<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328125643439.png" alt><br>md5处理也不存在<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328125948278.png" alt><br>sha1处理也不存在<br><img src="http://picture.manhao6.cn/记一次thinkphp上传漏洞/20190328010130436.png" alt><br>则现在只是第一种，第二种方式。如果采用第二种方式，我们就很难猜到命名规则了。<br>第一条规则总结两点</p>
 <ul>
@@ -564,7 +563,7 @@
   <p><span>本文标题:</span><a href="/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/">记一次thinkphp上传漏洞（白盒审计）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Tea_Mh 的个人博客">Tea_Mh</a></p>
   <p><span>发布时间:</span>2019年03月27日 - 23:24</p>
-  <p><span>最后更新:</span>2019年03月28日 - 17:19</p>
+  <p><span>最后更新:</span>2019年03月28日 - 17:21</p>
   <p><span>原始链接:</span><a href="/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/" title="记一次thinkphp上传漏洞（白盒审计）">www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="www.manhao6.cn/2019/03/27/记一次thinkphp上传漏洞（白盒审计）/" aria-label="复制成功！"></i></span>
   </p>
