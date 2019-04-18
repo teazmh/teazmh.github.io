@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-simple.min.css?v=1.0.2">
+
+
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"always","offset":10,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="0x01 前言最近在静下来学技术，翻出老师讲课的网络对抗原理课ppt。本篇从企业和实践工程角度看待和思考相关安全问题。">
+<meta name="keywords" content="网络对抗">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络对抗原理浅析">
+<meta property="og:url" content="blog.manhao6.cn/2019/03/15/网络对抗原理浅析/index.html">
+<meta property="og:site_name" content="m&#39;bolg">
+<meta property="og:description" content="0x01 前言最近在静下来学技术，翻出老师讲课的网络对抗原理课ppt。本篇从企业和实践工程角度看待和思考相关安全问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://picture.manhao6.cn/网络对抗原理浅析/20190407044224046.png">
+<meta property="og:image" content="http://picture.manhao6.cn/网络对抗原理浅析/20190407041914143.png">
+<meta property="og:image" content="http://picture.manhao6.cn/网络对抗原理浅析/20190407054916899.png">
+<meta property="og:updated_time" content="2019-04-15T09:11:35.633Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络对抗原理浅析">
+<meta name="twitter:description" content="0x01 前言最近在静下来学技术，翻出老师讲课的网络对抗原理课ppt。本篇从企业和实践工程角度看待和思考相关安全问题。">
+<meta name="twitter:image" content="http://picture.manhao6.cn/网络对抗原理浅析/20190407044224046.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="m'bolg" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="blog.manhao6.cn/2019/03/15/网络对抗原理浅析/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>网络对抗原理浅析 | m'bolg</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">m'bolg</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">做安全的渣渣辉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/标签/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-类别">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/分类/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>类别</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于我">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/关于我/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于我</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-档案">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>档案</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="blog.manhao6.cn/2019/03/15/网络对抗原理浅析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tea_Mh">
+      <meta itemprop="description" content="兜兜的熊猫">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/8707100-c1b6a69a8bfcd8c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/957/format/webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m'bolg">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">网络对抗原理浅析
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-15 15:33:18" itemprop="dateCreated datePublished" datetime="2019-03-15T15:33:18+08:00">2019-03-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-15 17:11:35" itemprop="dateModified" datetime="2019-04-15T17:11:35+08:00">2019-04-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/0x01-技术原理/" itemprop="url" rel="index"><span itemprop="name">0x01 技术原理</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/0x01-技术原理/网络对抗/" itemprop="url" rel="index"><span itemprop="name">网络对抗</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h1><p>最近在静下来学技术，翻出老师讲课的网络对抗原理课ppt。<br>本篇从企业和实践工程角度看待和思考相关安全问题。<br><a id="more"></a></p>
+<h1 id="0x01-浅析"><a href="#0x01-浅析" class="headerlink" title="0x01 浅析"></a>0x01 浅析</h1><h2 id="入侵与入侵检测"><a href="#入侵与入侵检测" class="headerlink" title="入侵与入侵检测"></a>入侵与入侵检测</h2><h3 id="1-渗透"><a href="#1-渗透" class="headerlink" title="1.渗透"></a>1.渗透</h3><p>之前博客相应介绍过相应过程，本节不做详细介绍：—-&gt;<a href="http://blog.manhao6.cn/2019/03/10/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B/">渗透测试</a><br><img src="http://picture.manhao6.cn/网络对抗原理浅析/20190407044224046.png" alt="老师讲课的图"><br>大概总结如下阶段：</p>
+<ul>
+<li>信息收集</li>
+<li>漏洞检测</li>
+<li>漏洞利用和权限提升</li>
+<li>后渗透阶段</li>
+<li>安全评估报告</li>
+</ul>
+<h3 id="2-入侵检测"><a href="#2-入侵检测" class="headerlink" title="2.入侵检测"></a>2.入侵检测</h3><ul>
+<li>识别与发现<ul>
+<li>潜在威胁</li>
+<li>实时入侵</li>
+</ul>
+</li>
+<li><p>检测方式</p>
+<ul>
+<li>特征检测（黑名单）</li>
+<li>异常检测（白名单）</li>
+</ul>
+</li>
+<li><p>部署位置</p>
+<ul>
+<li>流量汇聚处</li>
+<li>AAA认证</li>
+<li>日志汇聚处</li>
+<li>主机</li>
+</ul>
+</li>
+<li><p>实时性（权衡和妥协）</p>
+<ul>
+<li>实时</li>
+<li>准实时</li>
+<li>事后</li>
+</ul>
+</li>
+<li><p>响应</p>
+<ul>
+<li>联动</li>
+<li>告警</li>
+</ul>
+</li>
+<li><p>工具</p>
+<ul>
+<li>HIDS</li>
+<li>IDS</li>
+<li>蜜罐</li>
+</ul>
+</li>
+<li><p>实 例：</p>
+<ul>
+<li>snort</li>
+<li>WAF-Modesecurity lua</li>
+<li>Agent-OSSEC</li>
+<li>日志分析系统</li>
+</ul>
+</li>
+<li><p>ModSecurity（五阶段）</p>
+<ul>
+<li>Phase Request Headers</li>
+<li>Phase Request Body</li>
+<li>Phase Response Headers</li>
+<li>Phase Response Body</li>
+<li>Phase Logging</li>
+</ul>
+</li>
+<li><p>蜜罐</p>
+</li>
+<li>与狭义IDS区别</li>
+<li>面临问题：部署、灵活性、响应</li>
+</ul>
+<h2 id="DDos与抗D"><a href="#DDos与抗D" class="headerlink" title="DDos与抗D"></a>DDos与抗D</h2><p>DDos：分布式拒绝服务攻击<br>攻击路径：</p>
+<ul>
+<li>网络层DDos</li>
+<li>应用层DDos</li>
+</ul>
+<p>攻击类型：</p>
+<ul>
+<li>网络层<ul>
+<li>ICMP Flood</li>
+<li>UDP Flood</li>
+<li>NTP Flood</li>
+<li>SYN Flood</li>
+<li>DNS Query Flood</li>
+</ul>
+</li>
+<li>应用层<ul>
+<li>CC 攻击</li>
+<li>REDos</li>
+</ul>
+</li>
+</ul>
+<p>攻击方式：</p>
+<ul>
+<li>资源消耗类攻击</li>
+<li>服务器消耗量攻击</li>
+<li>反射类攻击</li>
+<li>混合型攻击</li>
+</ul>
+<p>攻击源：</p>
+<ul>
+<li>肉鸡、僵尸</li>
+<li>IOT设备（收集）</li>
+<li>专业团队机房</li>
+</ul>
+<p>抗D-防御方法<br>流量清洗：</p>
+<ul>
+<li><p>四层清洗</p>
+<ul>
+<li>支持非http流量</li>
+<li>不需要SSL证书</li>
+</ul>
+</li>
+<li><p>七层清洗</p>
+<ul>
+<li>支持防CC</li>
+</ul>
+</li>
+</ul>
+<p>总体防护：</p>
+<ul>
+<li>准备备用ip</li>
+<li>配置供应商高防ip和回源策略</li>
+<li>制定预案和响应策略，演练<h2 id="网络安全体系和理论"><a href="#网络安全体系和理论" class="headerlink" title="网络安全体系和理论"></a>网络安全体系和理论</h2><h3 id="思考安全问题"><a href="#思考安全问题" class="headerlink" title="思考安全问题"></a>思考安全问题</h3>概念(安全含义太大)：</li>
+<li>security VS safety</li>
+<li>security VS secrecy</li>
+<li>security VS audit</li>
+</ul>
+<p>两个维度：</p>
+<ul>
+<li><p>弱点</p>
+<ul>
+<li>漏洞 — 漏洞挖掘</li>
+<li>配置不当 — SDL</li>
+<li>设计缺陷 — ACL 防篡改</li>
+</ul>
+</li>
+<li><p>攻击</p>
+<ul>
+<li>扫描 —-入侵检测</li>
+<li>渗透 —- 应急响应</li>
+<li>DDos、Anti-DDos</li>
+</ul>
+</li>
+</ul>
+<p>避免攻防误区：</p>
+<ul>
+<li>逆向思维</li>
+<li>攻击者的活的</li>
+<li>攻击者是死的</li>
+<li>内部人员和系统是活的</li>
+</ul>
+<p>防御者角度：</p>
+<ul>
+<li>更全的更细致的信息</li>
+<li>更强的操控权</li>
+<li>改变系统/制定流程的资格</li>
+<li>专职的人</li>
+</ul>
+<p>防御体系构建（扬长避短）</p>
+<ul>
+<li>让系统规范</li>
+<li>加强对信息了解</li>
+<li>安全评估</li>
+<li>入侵检测</li>
+<li>及时响应</li>
+</ul>
+<h3 id="做好安全工作"><a href="#做好安全工作" class="headerlink" title="做好安全工作"></a>做好安全工作</h3><p>了解企业：</p>
+<ul>
+<li>人员角色</li>
+<li>网络架构与运维</li>
+<li>应用架构与研发过程</li>
+<li>业务 与 经营</li>
+</ul>
+<p>渗透路径启示</p>
+<ul>
+<li>网络访问的隔离与限制</li>
+<li>漏洞的发现和利用</li>
+<li>账号与权限</li>
+</ul>
+<p>技术栈：</p>
+<ul>
+<li>客户端安全</li>
+<li>应用于系统安全</li>
+<li>应用安全</li>
+<li>业务安全</li>
+<li>数据安全</li>
+</ul>
+<h2 id="网络安全域划分与隔离"><a href="#网络安全域划分与隔离" class="headerlink" title="网络安全域划分与隔离"></a>网络安全域划分与隔离</h2><h3 id="系统与网络安全"><a href="#系统与网络安全" class="headerlink" title="系统与网络安全"></a>系统与网络安全</h3><ul>
+<li>安全域隔离与划分</li>
+<li>认证、授权和审计（AAA）</li>
+<li>边界入侵检测</li>
+<li>主机安全与配置</li>
+</ul>
+<p>安全域划分与隔离：<br><img src="http://picture.manhao6.cn/网络对抗原理浅析/20190407041914143.png" alt></p>
+<h3 id="ACL与防火墙"><a href="#ACL与防火墙" class="headerlink" title="ACL与防火墙"></a>ACL与防火墙</h3><ul>
+<li>包过滤防火墙和状态防火墙</li>
+<li>NAT地址转换和ALG应用层网关</li>
+<li>五元组、N元组</li>
+<li>黑名单与白名单</li>
+<li>四层均衡负载与Firewall</li>
+<li>UTM 与 NGFW</li>
+</ul>
+<h3 id="端口管理"><a href="#端口管理" class="headerlink" title="端口管理"></a>端口管理</h3><ul>
+<li>规范最小权限原则</li>
+<li>端口扫描，梳理端口</li>
+<li>维护和整改</li>
+</ul>
+<h2 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h2><h3 id="现状："><a href="#现状：" class="headerlink" title="现状："></a>现状：</h3><ul>
+<li><p>业务数据泄密</p>
+<ul>
+<li>投诉</li>
+<li>案件</li>
+<li>客户信息</li>
+</ul>
+</li>
+<li><p>公司机密泄密</p>
+<ul>
+<li>员工通讯录</li>
+<li>内部邮件、论坛</li>
+<li>战略机密、高管行踪<h4 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h4></li>
+</ul>
+</li>
+<li>有什么数据</li>
+<li>数据价值意义</li>
+<li>如何保护数据</li>
+<li>安全措施和数据之间的关系</li>
+<li>必要性和代价</li>
+</ul>
+<p>特点与难点</p>
+<ul>
+<li>大部分不是技术的对抗</li>
+<li>主要目标在内不在外</li>
+<li>建立在已有的防御体系上</li>
+<li>又独立于已有的防御体系</li>
+</ul>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><ul>
+<li>防渗透</li>
+<li>加密存储</li>
+<li>增强AAA</li>
+<li>水印</li>
+<li>建立保密等级制度</li>
+</ul>
+<p>怎么做：</p>
+<ul>
+<li>数据梳理</li>
+<li>数据定级、打标</li>
+<li>针对数据级别的安全规范矩阵</li>
+<li>推出规则，控制增量</li>
+<li>实例评估、整改，消化存量<br>处置方式：<br>手段：<ul>
+<li>明文、加密</li>
+<li>哈希</li>
+<li>水印</li>
+<li>AAA<br>级别变化：</li>
+<li>打星、脱敏</li>
+<li>聚合</li>
+</ul>
+</li>
+</ul>
+<h4 id="数据级别（抽象数据划分）："><a href="#数据级别（抽象数据划分）：" class="headerlink" title="数据级别（抽象数据划分）："></a>数据级别（抽象数据划分）：</h4><p>类型维度：</p>
+<ul>
+<li>公司数据（B）</li>
+<li>用户数据（C）</li>
+</ul>
+<p>级别维度：</p>
+<ul>
+<li>公开（1）</li>
+<li>共享（2）</li>
+<li>秘密（3）</li>
+<li>机密（4）</li>
+</ul>
+<p>数据生命周期：</p>
+<ul>
+<li>生成</li>
+<li>传输</li>
+<li>存储</li>
+<li>读取</li>
+<li>展示</li>
+<li>转移</li>
+<li>销毁</li>
+</ul>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>避免在具体细节处纠缠—-自上而下推动</li>
+<li>避免描述和现状不一致——控制权</li>
+<li>考虑现状和可行性 —-不给自己挖坑</li>
+</ul>
+<h3 id="典型场景"><a href="#典型场景" class="headerlink" title="典型场景"></a>典型场景</h3><p>用户场景：</p>
+<ul>
+<li>用户机密数据不能存储</li>
+<li>用户机密信息采集必须加密</li>
+<li>用户秘密数据不能前台展示</li>
+<li>用户机密数据不能后台展示</li>
+<li>用户秘密数据必须通过认证和授权才能被用户自己访问</li>
+<li>用户共享的信息必须经过用户授权才能共享给指定的的经过认证的其他用户</li>
+</ul>
+<p>公司场景：</p>
+<ul>
+<li>公司秘密必须经过认证和授权才能访问，且必须有记录</li>
+<li>公司秘密信息的转移必须经过审批</li>
+<li>公司共享信息在展示时要加水印</li>
+<li>公司秘密数据不得存储在公司以外的网络和介质中</li>
+<li>公司贡献数据必须经过审批才能对外公开</li>
+</ul>
+<h2 id="应用安全"><a href="#应用安全" class="headerlink" title="应用安全"></a>应用安全</h2><h3 id="了解开发框架"><a href="#了解开发框架" class="headerlink" title="了解开发框架"></a>了解开发框架</h3><p>MVC：</p>
+<ul>
+<li>View Contronller Modle</li>
+</ul>
+<p>RESTful：</p>
+<ul>
+<li>前端渲染</li>
+</ul>
+<p>J2EE：</p>
+<ul>
+<li>客户层</li>
+<li>表示层</li>
+<li>业务逻辑层</li>
+<li>数据层</li>
+</ul>
+<p>容器与Filter：</p>
+<ul>
+<li>http服务器-Module<ul>
+<li>Apache</li>
+<li>Nginx</li>
+</ul>
+</li>
+<li>容器-容器Filter<ul>
+<li>JBoss</li>
+<li>Tomcat</li>
+<li>Jetty</li>
+</ul>
+</li>
+<li>开发框架Filter、Serclet Filter</li>
+<li>web层渲染</li>
+<li>Ajax请求生成、Json结果返回</li>
+<li>数据层ORM</li>
+</ul>
+<p>中间件：</p>
+<ul>
+<li>远程同步调用</li>
+<li>异步通知、消息总线</li>
+<li>分布式缓存</li>
+<li>分布式数据库</li>
+<li>集中配置管理</li>
+<li>同意的应用日志采集方案</li>
+<li>数据分析平台</li>
+</ul>
+<p>常见的框架、软件：</p>
+<ul>
+<li>Spring struts Hibernate</li>
+<li>Spring MVc</li>
+<li>ASp.NET</li>
+<li>Django</li>
+<li>THinkPHP</li>
+<li>Angular</li>
+</ul>
+<h3 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h3><ul>
+<li>目标系统</li>
+<li>文档</li>
+<li>代码</li>
+<li>测试环境</li>
+<li>人</li>
+<li>日志</li>
+<li>攻击者提供线索</li>
+</ul>
+<h3 id="安全开发"><a href="#安全开发" class="headerlink" title="安全开发"></a>安全开发</h3><p>安全框架-告诉开发该怎么做<br>安全编码规范-告诉开发必须这么做<br>白盒审计-找出不这么做<br><img src="http://picture.manhao6.cn/网络对抗原理浅析/20190407054916899.png" alt></p>
+<p>SDL软件开发周期：</p>
+<ul>
+<li>需求评审</li>
+<li>设计评审</li>
+<li>技术评审</li>
+<li>测试用例评审</li>
+<li>开发阶段</li>
+<li>测试阶段</li>
+<li>上线阶段</li>
+<li>运营阶段</li>
+<li>下线<h2 id="业务安全"><a href="#业务安全" class="headerlink" title="业务安全"></a>业务安全</h2>三个层次：</li>
+<li><p>军队vs 军队</p>
+<ul>
+<li>渗透、扫描、DDos</li>
+<li>拼技术</li>
+</ul>
+</li>
+<li><p>警察 vs 犯罪</p>
+<ul>
+<li>盗号、欺诈、羊毛、刷榜</li>
+<li>拼规则</li>
+</ul>
+</li>
+<li><p>城管 VS 小贩</p>
+<ul>
+<li>垃圾信息、爬虫</li>
+<li>拼运营</li>
+</ul>
+</li>
+</ul>
+<p>基于规则：</p>
+<ul>
+<li>账号安全</li>
+<li>资金风控</li>
+<li>搜索反作弊</li>
+<li>广告反作弊</li>
+<li>返垃圾信息</li>
+</ul>
+<p>基于模型：</p>
+<ul>
+<li>统计分析</li>
+<li>模式识别</li>
+<li>人工智能</li>
+</ul>
+<p>逃逸机制</p>
+<ul>
+<li>验证码</li>
+<li>提供认证级别</li>
+<li>降级降权</li>
+<li>基于时间的解禁策略</li>
+</ul>
+<p>系统实现：<br>打点机制<br>规则引擎<br>分析引擎<br>处理模块<br>效果分析</p>
+<h2 id="AAA与认证"><a href="#AAA与认证" class="headerlink" title="AAA与认证"></a>AAA与认证</h2><h3 id="AAA"><a href="#AAA" class="headerlink" title="AAA"></a>AAA</h3><p>概念</p>
+<ul>
+<li>认证（Authentication）</li>
+<li>授权（Authorization）</li>
+<li>计费或审计（Acounting or Audit）</li>
+</ul>
+<p>应用场合（登录、验证）</p>
+<ul>
+<li>网络准入：有线、wifi、vpn</li>
+<li>服务器访问登录、认证、操作</li>
+<li>网站登录</li>
+<li>设备使用</li>
+<li>重要操作权鉴</li>
+</ul>
+<p>认证方式</p>
+<ul>
+<li>基于口令</li>
+<li>基于生物特征</li>
+<li>基于凭证、证书</li>
+</ul>
+<p>口令（哈希形式存储）</p>
+<ul>
+<li>文本</li>
+<li>数据库</li>
+<li>unix、windows</li>
+<li>ldap<br>凭证（易丢失）</li>
+<li>证书</li>
+<li>token</li>
+<li>手机短信</li>
+<li>邮箱</li>
+<li>IP/mac<br>生物特征（难伪造，随身携带）</li>
+<li>指纹</li>
+<li>人脸</li>
+<li>虹膜</li>
+</ul>
+<p>认证模式：</p>
+<ul>
+<li>PAP</li>
+<li>Chap</li>
+</ul>
+<p>Kerberos认证协议</p>
+<ul>
+<li>认证</li>
+<li>凭据</li>
+<li>秘钥交换</li>
+</ul>
+<p>PKI（身份与公钥绑定）</p>
+<ul>
+<li>CA</li>
+<li>RA</li>
+<li>证书库</li>
+<li>CRL</li>
+</ul>
+<p>EAP协议</p>
+<ul>
+<li>MD5</li>
+<li>TLS</li>
+<li>TTLS</li>
+<li>PEAP</li>
+<li>LEAP</li>
+</ul>
+<p>Radius协议</p>
+<ul>
+<li>File</li>
+<li>Unix</li>
+<li>LDAP</li>
+<li>OTP</li>
+<li>EAP</li>
+</ul>
+<p>双因子认证：</p>
+<ul>
+<li>口令+</li>
+<li>不同场合，不同的选择与组合方式</li>
+<li>与二次认证区别</li>
+</ul>
+<p>认证典型场合：</p>
+<ul>
+<li><p>网络准入</p>
+<ul>
+<li>有线、WiFi、vpn</li>
+<li>EAP</li>
+<li>LDAP</li>
+<li>Radius</li>
+<li>AC、交换机</li>
+<li>WEP/WAP/WAP2</li>
+</ul>
+</li>
+<li><p>SSH</p>
+<ul>
+<li>口令</li>
+<li>PAM</li>
+<li>证书</li>
+<li>GSSAPI、KERBEROS</li>
+</ul>
+</li>
+<li><p>网站登录</p>
+<ul>
+<li>登录验证</li>
+<li>openid/oauth</li>
+<li>SSO</li>
+<li>Session共享</li>
+</ul>
+</li>
+<li><p>二次认证</p>
+<ul>
+<li>业务安全</li>
+<li>策越与应用场景</li>
+<li>认证技术和方案</li>
+<li>框架</li>
+</ul>
+</li>
+</ul>
+<p>口令、认证攻防：</p>
+<ul>
+<li>弱密码、字典爆破、刷库、钓鱼</li>
+<li>验证码（放机器人、爆破）</li>
+<li>围绕次数验证</li>
+<li>分析与检测</li>
+<li>口令存储与传输</li>
+</ul>
+<p>验证码缺陷：</p>
+<ul>
+<li>ocr</li>
+<li>熵不够</li>
+<li>触发时更新 </li>
+<li>答案外泄</li>
+<li>绑定Session 与绑定事务</li>
+<li>使用错误导致验证码不起作用</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/03/15/网络对抗原理浅析/">网络对抗原理浅析</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Tea_Mh 的个人博客">Tea_Mh</a></p>
+  <p><span>发布时间:</span>2019年03月15日 - 15:33</p>
+  <p><span>最后更新:</span>2019年04月15日 - 17:11</p>
+  <p><span>原始链接:</span><a href="/2019/03/15/网络对抗原理浅析/" title="网络对抗原理浅析">blog.manhao6.cn/2019/03/15/网络对抗原理浅析/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="blog.manhao6.cn/2019/03/15/网络对抗原理浅析/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      
+   
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="http://picture.manhao6.cn/20190220135756363/20190220015831441.png" alt="Tea_Mh wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎加我微信，交流交流</div>
+</div>
+
+      
+
+    
+      
+    
+    
+
+    
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+  
+</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络对抗/" rel="tag"># 网络对抗</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/10/渗透测试（持续更新）/" rel="next" title="渗透测试（持续更新）">
+                <i class="fa fa-chevron-left"></i> 渗透测试（持续更新）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/16/记一次thinkphp上传漏洞（白盒审计）/" rel="prev" title="记一次thinkphp上传漏洞">
+                记一次thinkphp上传漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80Mjc2Mi8xOTMwOQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://upload-images.jianshu.io/upload_images/8707100-c1b6a69a8bfcd8c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/957/format/webp" alt="Tea_Mh">
+            
+              <p class="site-author-name" itemprop="name">Tea_Mh</p>
+              <p class="site-description motion-element" itemprop="description">兜兜的熊猫</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/分类/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/标签/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/teazmh" title="GitHub &rarr; https://github.com/teazmh" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:man19951124@gmail.com" title="E-Mail &rarr; mailto:man19951124@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/2315663684" title="微博 &rarr; https://weibo.com/2315663684" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="tencent://message/?uin=1130830188" title="QQ &rarr; tencent://message/?uin=1130830188" rel="noopener" target="_blank"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://rliyuqing.github.io/" title="https://rliyuqing.github.io/" rel="noopener" target="_blank">嵩嵩</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://luckyjq.github.io/" title="https://luckyjq.github.io/" rel="noopener" target="_blank">luckyjq</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zheng19970225.github.io/" title="https://zheng19970225.github.io/" rel="noopener" target="_blank">让子弹飞一会</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-前言"><span class="nav-number">1.</span> <span class="nav-text">0x01 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-浅析"><span class="nav-number">2.</span> <span class="nav-text">0x01 浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#入侵与入侵检测"><span class="nav-number">2.1.</span> <span class="nav-text">入侵与入侵检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-渗透"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.渗透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-入侵检测"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.入侵检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDos与抗D"><span class="nav-number">2.2.</span> <span class="nav-text">DDos与抗D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全体系和理论"><span class="nav-number">2.3.</span> <span class="nav-text">网络安全体系和理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思考安全问题"><span class="nav-number">2.3.1.</span> <span class="nav-text">思考安全问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做好安全工作"><span class="nav-number">2.3.2.</span> <span class="nav-text">做好安全工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全域划分与隔离"><span class="nav-number">2.4.</span> <span class="nav-text">网络安全域划分与隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统与网络安全"><span class="nav-number">2.4.1.</span> <span class="nav-text">系统与网络安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL与防火墙"><span class="nav-number">2.4.2.</span> <span class="nav-text">ACL与防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口管理"><span class="nav-number">2.4.3.</span> <span class="nav-text">端口管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据安全"><span class="nav-number">2.5.</span> <span class="nav-text">数据安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#现状："><span class="nav-number">2.5.1.</span> <span class="nav-text">现状：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题原因"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">问题原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案："><span class="nav-number">2.5.2.</span> <span class="nav-text">解决方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据级别（抽象数据划分）："><span class="nav-number">2.5.2.1.</span> <span class="nav-text">数据级别（抽象数据划分）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意事项"><span class="nav-number">2.5.2.2.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#典型场景"><span class="nav-number">2.5.3.</span> <span class="nav-text">典型场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用安全"><span class="nav-number">2.6.</span> <span class="nav-text">应用安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解开发框架"><span class="nav-number">2.6.1.</span> <span class="nav-text">了解开发框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞挖掘"><span class="nav-number">2.6.2.</span> <span class="nav-text">漏洞挖掘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全开发"><span class="nav-number">2.6.3.</span> <span class="nav-text">安全开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务安全"><span class="nav-number">2.7.</span> <span class="nav-text">业务安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AAA与认证"><span class="nav-number">2.8.</span> <span class="nav-text">AAA与认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AAA"><span class="nav-number">2.8.1.</span> <span class="nav-text">AAA</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.miitbeian.gov.cn" rel="noopener" target="_blank">陕ICP备19003970号-1 </a>&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tea_Mh</span>
+
+  
+
+  
+</div>
+<span id="busuanzi_container_site_uv">
+  本站总访问量<span id="busuanzi_value_site_uv"></span>次--------
+</span>
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: '2019/03/15/网络对抗原理浅析/'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=7.0.0"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+</body>
+</html>
