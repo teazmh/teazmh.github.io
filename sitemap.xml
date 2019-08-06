@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>blog.manhao6.cn/%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7.html</loc>
+    
+    <lastmod>2019-08-06T13:46:01.791Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>blog.manhao6.cn/2019/04/06/sql%E6%B3%A8%E5%85%A5%E4%B8%8Esqlmap%E5%AE%9E%E8%B7%B5/</loc>
     
-    <lastmod>2019-04-15T16:49:53.598Z</lastmod>
+    <lastmod>2019-05-24T18:00:01.531Z</lastmod>
     
   </url>
   
@@ -58,13 +65,6 @@
   </url>
   
   <url>
-    <loc>blog.manhao6.cn/2019/03/27/%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7/</loc>
-    
-    <lastmod>2019-04-15T09:08:46.669Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>blog.manhao6.cn/2019/01/10/python-nmap%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%AB%E6%8F%8F%E5%99%A8/</loc>
     
     <lastmod>2019-04-15T09:07:47.542Z</lastmod>
@@ -79,7 +79,7 @@
   </url>
   
   <url>
-    <loc>blog.manhao6.cn/2019/04/08/openconnect-VPN%E6%90%AD%E5%BB%BA/</loc>
+    <loc>blog.manhao6.cn/openconnect-VPN%E6%90%AD%E5%BB%BA.html</loc>
     
     <lastmod>2019-04-15T09:06:33.077Z</lastmod>
     
