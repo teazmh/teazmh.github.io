@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="blog.manhao6.cn/"/>
-  <updated>2019-05-24T18:00:01.531Z</updated>
+  <updated>2019-10-12T14:08:27.061Z</updated>
   <id>blog.manhao6.cn/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>20191012220827</title>
+    <link href="blog.manhao6.cn/2019/10/12/%E5%B9%BF%E4%B8%9C%E5%BC%BA%E7%BD%91%E6%9D%AF--web%E7%AF%87/"/>
+    <id>blog.manhao6.cn/2019/10/12/广东强网杯--web篇/</id>
+    <published>2019-10-12T14:08:27.000Z</published>
+    <updated>2019-10-12T14:08:27.061Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>sqlmap使用手册</title>
@@ -355,6 +369,36 @@
     
     
       <category term="English" scheme="blog.manhao6.cn/tags/English/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>upload-labs通关挑战</title>
+    <link href="blog.manhao6.cn/2018/08/13/upload-labs%E9%80%9A%E5%85%B3%E6%8C%91%E6%88%98/"/>
+    <id>blog.manhao6.cn/2018/08/13/upload-labs通关挑战/</id>
+    <published>2018-08-13T15:25:31.000Z</published>
+    <updated>2019-08-15T23:37:16.258Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>文件上传通关挑战</p><h1 id="0x02-start"><a href="#0x02-start" class="headerlink" title="0x02 start"></a>0x02 start</h1><h2 id="pass-01"><a href="#pass-01" class="headerlink" title="pass 01"></a>pass 01</h2><p>查看网页源代码发现只允许上传jpg|.png|.gif文件（前端禁用）<br><img src="/upload-labs通关挑战/20190813113241666.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;0x01&quot;&gt;&lt;a href=&quot;#0x01&quot; class=&quot;headerlink&quot; title=&quot;0x01&quot;&gt;&lt;/a&gt;0x01&lt;/h1&gt;&lt;p&gt;文件上传通关挑战&lt;/p&gt;
+&lt;h1 id=&quot;0x02-start&quot;&gt;&lt;a href=&quot;#0x02-start&quot; class=&quot;
+      
+    
+    </summary>
+    
+      <category term="0x01 web安全" scheme="blog.manhao6.cn/categories/0x01-web%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="文件上传" scheme="blog.manhao6.cn/categories/0x01-web%E5%AE%89%E5%85%A8/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    
+    
+      <category term="文件上传" scheme="blog.manhao6.cn/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    
+      <category term="upload" scheme="blog.manhao6.cn/tags/upload/"/>
     
   </entry>
   
